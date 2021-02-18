@@ -1,0 +1,149 @@
+---
+main_topsize: 0.15 #percent coverage of the poster
+main_bottomsize: 0.1
+#ESSENTIALS
+title: " "
+primary_colour: "#1a1818" 
+secondary_colour: "#9e8a8a"
+accent_colour: "#cc0000"
+poster_height: "36in"
+poster_width: "23.4in"
+main_fontfamily: "Helvetica"
+main_textsize: "130px"
+author_textsize: "1.11em"
+body_textsize: "40px"
+author:
+  - name: "Matthew Skiffington"
+    main: true
+    twitter: mattskiff_ 
+    email: mks29@students.waikato.ac.nz
+affiliation:
+    address: Department of Computer Science, University of Waikato
+main_findings: 
+  - "An Exploration of **Normalising Flows** using **Conditional Density Estimation**"
+logoleft_name: "figures/TAIAO_logo_1000x320_upscaled.png"
+logoright_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
+logocenter_name: "figures/SVGFullColourHorizontalRGBforredbackground_upscaled.png"
+output: 
+  posterdown::posterdown_betterport:
+    self_contained: false
+    fig_caption: yes
+    pandoc_args: --mathjax
+    number_sections: false
+bibliography: bibliography.bibtex
+link-citations: true
+---
+
+<!-- logo sizing -->
+<style>
+.main p {
+margin-left: 0em;
+}
+#main-img-left {
+ width: 35.75%;
+ height: 72.5%;
+ bottom: 0.4in;
+}
+#main-img-center {
+ width: 36.75%;
+ height: 71.5%;
+}
+#main-img-right {
+ bottom: 0.4in;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = 'G:\\My Drive\\PhD\\posters\\')
+```
+
+<br>
+
+## Introduction 
+
+The World Health Organisation estimates 150,000 people die from climate change already, with much of this concentrated in Southern and Sub-Sarahan Africa. Projections include ~250,000 deaths p/y between 2030-50 and $2-4B of direct damage to health p/y by 2030 [@world2014quantitative]. This is considered conservative by some and estimates vary considerably [@parncutt2019human].
+
+Many statistical models in environmental science often rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents tremendous risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers increasingly rely on. 
+
+Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modelled. Conditional density estimation with normalising flows can help meet this need.
+
+## Conditional Density Estimation
+
+<!-- add figure caption: Animation of CDE using 'Mexican hat' data --> 
+
+```{r cde_giff_qr,out.extra='style="float:right; padding:10px"',out.width="30%",echo=FALSE}
+# All defaults
+knitr::include_graphics('figures\\qr.png')
+```
+
+Conditional density estimation is a *task* for which there are methods in statistics, machine learning and deep learning. It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate and generated a confidence or credible interval, we are instead concerned with predicting the full conditional density of the data for a given query point, thus representing an improved form of **uncertainty quantification**. Figure \ref{fig:figs} demonstrates kernel CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the old faithful dataset via the `hdrcde` R package. Early methods included KCDE and discretization of the target variable via class probability estimators [@frank2009conditional] (Figure \ref{fig:qr}). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde], Mixture Density Networks [@carney2005predicting] and GMMs [@gilardi2002conditional]. 
+
+```{r pressure, echo=FALSE, fig.cap="\\label{fig:figs}Demonstration of KCDE estimates", fig.height=4, message=FALSE, warning=FALSE, out.width="100%"}
+library(hdrcde)
+library(ggplot2)
+library(gridExtra)
+
+faithful.cde <- cde(x = faithful$waiting, y = faithful$eruptions,
+                    x.name="Waiting time", y.name = "Duration time",
+                    x.margin = 80)
+
+faithful2.cde <- cde(x = faithful$waiting, y = faithful$eruptions,
+                    x.name="Waiting time", y.name = "Duration time",
+                    x.margin = 50)
+
+cde_df <- data.frame(y = faithful.cde$y,
+                     z = as.vector(faithful.cde$z),
+                     z2 = as.vector(faithful2.cde$z))
+
+p1 <- ggplot(data = cde_df) +
+  geom_line(mapping = aes(x = y,y = z),color = 'red') +
+  geom_line(mapping = aes(x = y,y = z2),color = 'blue') +
+  theme_light() +
+  labs(title = "Conditional Density Estimates (2)\n of Eruption Duration",
+       x = "target",y = "density")
+
+p2 <- ggplot(data = faithful) +
+  geom_point(mapping = aes(x = waiting,y = eruptions)) +
+  geom_vline(xintercept = 80,color = 'red') + 
+  geom_vline(xintercept = 50,color = 'blue') + 
+  theme_light() +
+  labs(title = "Scatterplot of Old Faithful Data\n and CDE query points")
+
+grid.arrange(p1, p2, nrow = 1)
+```
+
+## Normalising Flows
+
+Normalising flows are a recent *class of models* [@kobyzev2020normalizing] that entail the use of a sequence of invertible, differentiable, probability transformations applied to a base distribution (typically a simple gaussian) in order to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). The number of layers usually corresponds to the expressiveness of the trained distribution (figure \ref{fig:nfs_expressive}). Normalising flows came to prominence for their relative efficiency in both generative sampling and density evaluation. In terms of generative modelling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not generally efficient in terms of density evaluation (inference). 
+
+$$ equation for  $$
+
+```{r nfs_expressivity, echo=FALSE, fig.cap="\\label{fig:nfs_expressive}Demonstration of NF expressiveness", fig.height=4, message=FALSE, warning=FALSE, out.width="100%"}
+
+```
+
+Normalising flows are usually trained by minimizing the KL-divergence via standard optimisation techniques, like SGD. The chronology of NF
+
+In ML/DL 
+
+Practically:
+
+## Motivation
+
+Combining CDE with NFs is a natural extension of progress achieved in the separate fields of CDE and NF research. There has been some research at the intersection of these areas such as CDE with Bayesian NFs [@],[@],[@], but progress has been limited by the following factors:
+
+* Computational difficulty of scaling NFs to large data sets [@]
+* Few practical applications of CDE mainstream environmental science [@]
+* DL focus is often in areas of traditional strength for the field, such as image data [@]
+
+
+CDE has found use in finance [@rothfuss2019conditional], astropysics [@rojas2005conditional], environmental science [@carney2005predicting], neurodynamics [@gonccalves2020training], genetics [@wang2015conditional] and sociology [@trippe2018conditional]. 
+
+## Abbreviations
+
+CDE / ML / DL / MLR / VAEs / GANs / KL / GMMs
+
+## References
+

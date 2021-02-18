@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>cde_nfs.utf8</title>
+
+<script src="cde_nfs_files/header-attrs-2.6/header-attrs.js"></script>
+
+
+
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+<link href='https://fonts.googleapis.com/css?family=Helvetica' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Rasa' rel='stylesheet'>
+
+<!--
+Here are the required style attributes for css to make this poster work :)
+-->
+<style>
+@page {
+size: 23.4in 36in;
+margin: 0;
+padding: 0;
+}
+body {
+margin: 0px;
+padding: 0px;
+width: 23.4in;
+height: 36in;
+text-align: justify;
+font-size: 40px;
+line-height: 1.05;
+}
+/* RMarkdown Class Styles */
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+margin: auto;
+margin-top: 1em;
+margin-bottom: 1em;
+/* align-items: center; */
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+code {
+font-size: 25pt;
+font-family: monospace;
+background-color: #9e8a8a24;
+color: #1a1818;
+padding: 1.2mm;
+line-height: 1;
+border-radius: 2mm;
+}
+caption {
+margin-bottom: 10px;
+font-size: 20pt;
+font-style: italic;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #9e8a8a20;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  border-spacing: 0;
+  font-size: 40%;
+  border-style: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 1em;
+  padding-left: 1em;
+  line-height: 1em;
+}
+table {
+  margin: auto;
+}
+th {
+  padding-left: 5mm;
+  padding-right: 5mm;
+}
+.caption {
+font-size: 20pt;
+font-style: italic;
+padding-top: 0;
+}
+.references {
+font-size: 20px;
+line-height: 90%;
+}
+/* Create three unequal columns that floats next to each other */
+.column {
+float: left;
+padding: 0px;
+}
+.outer {
+width: 23.4in;
+height: calc(36in *  (1 - 0.15 - 0.1 - 0.01) );
+-webkit-column-count: 3; /* Chrome, Safari, Opera */
+-moz-column-count: 3; /* Firefox */
+column-count: 3;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+column-gap: 0;
+padding-left: 0cm;
+padding-right: 0cm;
+/* -webkit-column-rule-width: 50%;
+-moz-column-rule-width: 50%;
+column-rule-width: 50%; */
+-webkit-column-rule-style: none;
+-moz-column-rule-style: none;
+column-rule-style: none;
+-webkit-column-rule-color: black;
+-moz-column-rule-color: black;
+column-rule-color: black;
+background-color: #ffffff;
+font-family: Rasa;
+margin-top: calc(36in *  0.15 );
+padding-top: 1em;
+padding-bottom: 1em;
+}
+span.citation {
+  color: #9e8a8a;
+  font-weight: bold;
+}
+a {
+text-decoration: none;
+color: #9e8a8a;
+}
+#title {
+font-size: 125pt;
+text-align: left;
+margin: 0;
+line-height: 98%;
+border-bottom: 0;
+font-weight: normal;
+background: 0;
+}
+#author {
+color: #1a1818;
+margin: 0;
+line-height: 85%;
+font-size: 1.11em;
+}
+#affiliation {
+padding-top: 0.1em;
+color: ;
+font-style: italic;
+font-size: 25px;
+margin: 0;
+}
+sup {
+color: #cc0000;
+}
+.affiliation sup {
+font-size: 20px;
+}
+.author {
+text-align: left;
+}
+.author sup {
+font-size: 30px;
+}
+.author_extra {
+color: #9e8a8a;
+margin: 0;
+line-height: 85%;
+font-size: 35px;
+text-align: left;
+}
+.outer h1, h2, h3, h4, h5, h6 {
+text-align: center;
+margin: 0;
+font-weight: bold;
+}
+.section h1 {
+  text-align:center;
+  padding-bottom:5px;
+  background:
+    linear-gradient(
+      to left,
+      #ffffff 1%,
+      #ffffff 20%,
+      #1a181875 33%,
+      #1a1818 50%,
+      #1a181875 66%,
+      #ffffff 80%,
+      #ffffff 99%
+    )
+    left
+    bottom
+    #ffffff
+    no-repeat;
+  background-size:100% 5px ;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.outer h2 {
+text-align: center;
+}
+.outer p, .level2 {
+color: #000000;
+}
+.outer ol {
+padding-left: 8%;
+padding-right: 8%;
+text-align: left;
+}
+.main {
+width: 23.4in;
+height: calc(36in * 0.15);
+position: absolute;
+background-color: #1a1818;
+color: #ffffff90;
+font-family: Helvetica;
+background-image: linear-gradient(#1a1818 50%,#9e8a8a);
+}
+.main strong {
+color: #ffffff;
+}
+.main strong > sup {
+color: #ffffff;
+}
+.main sup {
+color: #ffffff90;
+}
+#main-img-left {
+width: 10%;
+left: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+#main-img-center {
+width: 10%;
+left: calc(23.4in * 0.45);
+bottom: 0.5in;
+position: absolute;
+}
+#main-img-right {
+width: 10%;
+right: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+.main p {
+font-size: 130px;
+font-family: Helvetica;
+text-align: center;
+margin: 0;
+position: absolute;
+top: 50%;
+-ms-transform: translateY(-50%);
+transform: translateY(-50%);
+margin-left: 1em;
+}
+.fab {
+color: #00000030;
+font-size: 25px;
+}
+.twitter, i {
+color: #00000030;
+font-size: 35px;
+text-decoration: none;
+}
+a.email {
+text-decoration: none;
+color: #00000030;
+font-size: 35px;
+}
+.envelope {
+color: #00000030;
+font-size: 5px;
+text-decoration: none;
+}
+.poster_wrap {
+width: 23.4in;
+height: 36in;
+padding: 0cm;
+}
+.main_bottom {
+width: 23.4in;
+height: calc(36in * 0.1);
+margin-top: calc(36in * (1 - 0.1));
+position: absolute;
+background-color: #1a1818;
+background-image: linear-gradient(#9e8a8a 10%, #1a1818);
+}
+.section {
+  padding-left: 10mm;
+  padding-right: 10mm;
+}
+span > #tab:mytable {
+  font-weight: bold;
+}
+.orcid img {
+  width: 3%;
+}
+.emphasis {
+  background-color: #008080;
+  color: #ffffff;
+  border: solid #0b2045 3mm;
+  margin: 1em;
+  padding-left: 0;
+  padding-right: 0;
+}
+.emphasis h1 {
+  font-weight: bold;
+  background: none;
+  background-color: #0b2045;
+  padding-bottom: 5mm;
+  padding-top: 1mm;
+  margin-top: -1mm;
+  margin-right: -1mm;
+  margin-left: -1mm;
+}
+.emphasis blockquote {
+  border: 0;
+}
+.emphasis ol {
+  padding: 0;
+  padding-left: 8%;
+  font-size: 100%;
+  font-weight: bold;
+}
+.emphasis p {
+  color: #ffffff;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+
+<div class="column outer">
+<div class="section">
+
+<h3 id="author" class="author">
+
+Matthew Skiffington<sup> </sup><br>
+<a class="twitter" href="https://mobile.twitter.com/mattskiff_"><i class="fab fa-twitter"></i>&nbsp;&nbsp;@mattskiff_</a><br>
+
+<a class='envelope'><i class="fas fa-envelope"></i></a> <a href="mailto:mks29@students.waikato.ac.nz" class="email">mks29@students.waikato.ac.nz</a> <br>
+</h3>
+
+<h5 id="author_extra", class="author_extra">
+</h5>
+
+
+<p id="affiliation" class="affiliation">
+<sup></sup> Department of Computer Science, University of Waikato
+</p>
+</div>
+
+<!-- logo sizing -->
+<style>
+.main p {
+margin-left: 0em;
+}
+#main-img-left {
+ width: 35.75%;
+ height: 72.5%;
+ bottom: 0.4in;
+}
+#main-img-center {
+ width: 36.75%;
+ height: 71.5%;
+}
+#main-img-right {
+ bottom: 0.4in;
+}
+
+</style>
+<p><br></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The World Health Organisation estimates 150,000 people die from climate change already, with much of this concentrated in Southern and Sub-Sarahan Africa. Projections include ~250,000 deaths p/y between 2030-50 and $2-4B of direct damage to health p/y by 2030 <span class="citation">(<a href="#ref-world2014quantitative" role="doc-biblioref">World-Health-Organization and others 2014</a>)</span>. This is considered conservative by some and estimates vary considerably <span class="citation">(<a href="#ref-parncutt2019human" role="doc-biblioref">Parncutt 2019</a>)</span>.</p>
+<p>Many statistical models in environmental science often rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents tremendous risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers increasingly rely on.</p>
+<p>Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modelled. Conditional density estimation with normalising flows can help meet this need.</p>
+</div>
+<div id="conditional-density-estimation" class="section level2">
+<h2>Conditional Density Estimation</h2>
+<!-- add figure caption: Animation of CDE using 'Mexican hat' data -->
+<p><img src="figures/qr.png" width="30%" style="float:right; padding:10px" /></p>
+<p>Conditional density estimation is a <em>task</em> for which there are methods in statistics, machine learning (ML) and deep learning (DL). It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate and generated a confidence or credible interval, we are instead concerned with predicting the full conditional density of the data for a given query point, thus representing an improved form of <strong>uncertainty quantification</strong>. Figure  demonstrates kernel CDE <span class="citation">(<a href="#ref-bashtannyk2001bandwidth" role="doc-biblioref">Bashtannyk and Hyndman 2001</a>)</span> <span class="citation">(<a href="#ref-rosenblatt1969conditional" role="doc-biblioref">Rosenblatt 1969</a>)</span> using the old faithful dataset via the <code>hdrcde</code> R package. Early methods included KCDE and discretization of the target variable via class probability estimators <span class="citation">(<a href="#ref-frank2009conditional" role="doc-biblioref">Frank and Bouckaert 2009</a>)</span> (Figure ). Modern methods for CDE include Random Forest-CDE [@], Mixture Density Networks [@] and</p>
+<div class="figure"><span id="fig:pressure"></span>
+<img src="cde_nfs_files/figure-html/pressure-1.png" alt="\label{fig:figs}Demonstration of KCDE estimates" width="100%" />
+<p class="caption">
+Figure 1: Demonstration of KCDE estimates
+</p>
+</div>
+</div>
+<div id="normalising-flows" class="section level2">
+<h2>Normalising Flows</h2>
+<p>Normalising flows are a recent <em>class of models</em> <span class="citation">(<a href="#ref-kobyzev2020normalizing" role="doc-biblioref">Kobyzev, Prince, and Brubaker 2020</a>)</span> that entail the use of a sequence of invertible, differentiable, probability transformations applied to a base distribution (typically a simple gaussian) in order to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). The number of layers usually corresponds to the expressiveness of the trained distribution (figure ). Normalising flows came to prominence for their relative efficiency in both generative sampling and density evaluation. In terms of generative modelling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not generally efficient in terms of density evaluation (inference).</p>
+<p><span class="math display">\[ equation for  \]</span></p>
+<p>Normalising flows are usually trained by minimizing the KL-divergence via standard optimisation techniques, like SGD. The chronology of NF</p>
+<p>In ML/DL</p>
+<p>Practically:</p>
+</div>
+<div id="motivation" class="section level2">
+<h2>Motivation</h2>
+<p>Combining CDE with NFs is a natural extension of progress achieved in the separate fields of CDE and NF research. There has been some research at the intersection of these areas such as CDE with Bayesian NFs [@],[@],[@], but progress has been limited by the following factors:</p>
+<ul>
+<li>Computational difficulty of scaling NFs to large data sets [@]</li>
+<li>Few practical applications of CDE mainstream environmental science [@]</li>
+<li>DL focus is often in areas of traditional strength for the field, such as image data [@]</li>
+</ul>
+<p>CDE has found use in finance <span class="citation">(<a href="#ref-rothfuss2019conditional" role="doc-biblioref">Rothfuss et al. 2019</a>)</span>, astropysics <span class="citation">(<a href="#ref-rojas2005conditional" role="doc-biblioref">Rojas et al. 2005</a>)</span>, environmental science <span class="citation">(<a href="#ref-carney2005predicting" role="doc-biblioref">Carney et al. 2005</a>)</span>, neurodynamics <span class="citation">(<a href="#ref-gonccalves2020training" role="doc-biblioref">Gonçalves et al. 2020</a>)</span>, genetics <span class="citation">(<a href="#ref-wang2015conditional" role="doc-biblioref">Wang and Ye 2015</a>)</span> and sociology <span class="citation">(<a href="#ref-trippe2018conditional" role="doc-biblioref">Trippe and Turner 2018</a>)</span>.</p>
+</div>
+<div id="abbreviations" class="section level2">
+<h2>Abbreviations</h2>
+<p>CDE / ML / DL / VAEs / GANs / KL</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-bashtannyk2001bandwidth" class="csl-entry">
+Bashtannyk, David M, and Rob J Hyndman. 2001. <span>“Bandwidth Selection for Kernel Conditional Density Estimation.”</span> <em>Computational Statistics &amp; Data Analysis</em> 36 (3): 279–98.
+</div>
+<div id="ref-carney2005predicting" class="csl-entry">
+Carney, Michael, Pádraig Cunningham, Jim Dowling, and Ciaran Lee. 2005. <span>“Predicting Probability Distributions for Surf Height Using an Ensemble of Mixture Density Networks.”</span> In <em>Proceedings of the 22nd International Conference on Machine Learning</em>, 113–20.
+</div>
+<div id="ref-frank2009conditional" class="csl-entry">
+Frank, Eibe, and Remco R Bouckaert. 2009. <span>“Conditional Density Estimation with Class Probability Estimators.”</span> In <em>Asian Conference on Machine Learning</em>, 65–81. Springer.
+</div>
+<div id="ref-gonccalves2020training" class="csl-entry">
+Gonçalves, Pedro J, Jan-Matthis Lueckmann, Michael Deistler, Marcel Nonnenmacher, Kaan Öcal, Giacomo Bassetto, Chaitanya Chintaluri, et al. 2020. <span>“Training Deep Neural Density Estimators to Identify Mechanistic Models of Neural Dynamics.”</span> <em>Elife</em> 9: e56261.
+</div>
+<div id="ref-kobyzev2020normalizing" class="csl-entry">
+Kobyzev, Ivan, Simon Prince, and Marcus Brubaker. 2020. <span>“Normalizing Flows: An Introduction and Review of Current Methods.”</span> <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>.
+</div>
+<div id="ref-parncutt2019human" class="csl-entry">
+Parncutt, Richard. 2019. <span>“The Human Cost of Anthropogenic Global Warming: Semi-Quantitative Prediction and the 1,000-Tonne Rule.”</span> <em>Frontiers in Psychology</em> 10: 2323.
+</div>
+<div id="ref-rojas2005conditional" class="csl-entry">
+Rojas, Alex L, Christopher R Genovese, Christopher J Miller, Robert Nichol, and Larry Wasserman. 2005. <span>“Conditional Density Estimation Using Finite Mixture Models with an Application to Astrophysics.”</span> Carnegie Mellon University, Pittsburgh, USA.[Online]. Available: http .
+</div>
+<div id="ref-rosenblatt1969conditional" class="csl-entry">
+Rosenblatt, Murray. 1969. <span>“Conditional Probability Density and Regression Estimators.”</span> <em>Multivariate Analysis II</em> 25: 31.
+</div>
+<div id="ref-rothfuss2019conditional" class="csl-entry">
+Rothfuss, Jonas, Fabio Ferreira, Simon Walther, and Maxim Ulrich. 2019. <span>“Conditional Density Estimation with Neural Networks: Best Practices and Benchmarks.”</span> <em>arXiv Preprint arXiv:1903.00954</em>.
+</div>
+<div id="ref-trippe2018conditional" class="csl-entry">
+Trippe, Brian L, and Richard E Turner. 2018. <span>“Conditional Density Estimation with Bayesian Normalising Flows.”</span> <em>arXiv Preprint arXiv:1802.04908</em>.
+</div>
+<div id="ref-wang2015conditional" class="csl-entry">
+Wang, Xiao-Feng, and Deping Ye. 2015. <span>“Conditional Density Estimation in Measurement Error Problems.”</span> <em>Journal of Multivariate Analysis</em> 133: 38–50.
+</div>
+<div id="ref-world2014quantitative" class="csl-entry">
+World-Health-Organization, and others. 2014. <span>“Quantitative Risk Assessment of the Effects of Climate Change on Selected Causes of Death, 2030s and 2050s.”</span>
+</div>
+</div>
+</div>
+
+</div>
+<div class="main">
+<p>An Exploration of <strong>Normalising Flows</strong> using <strong>Conditional Density Estimation</strong></p>
+</div>
+<div class="main_bottom">
+<img id="main-img-left" src=figures/TAIAO_logo_1000x320_upscaled.png>
+<img id="main-img-center" src=figures/SVGFullColourHorizontalRGBforredbackground_upscaled.png>
+<img id="main-img-right" src=https://raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png>
+</div>
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+var script = document.createElement("script");
+script.type = "text/javascript";
+var src = "true";
+if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+if (location.protocol !== "file:" && /^https?:/.test(src))
+src = src.replace(/^https?:/, '');
+script.src = src;
+document.getElementsByTagName("head")[0].appendChild(script);
+})();
+</script>
+
+
+</body>
+</html>
