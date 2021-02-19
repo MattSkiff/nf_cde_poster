@@ -400,6 +400,9 @@ margin-left: 0em;
 #main-img-right {
  bottom: 0.4in;
 }
+.footnotes {
+  font-size: 16pt;
+}
 
 </style>
 <p><br></p>
@@ -407,13 +410,13 @@ margin-left: 0em;
 <h2>Introduction</h2>
 <p>The World Health Organisation estimates 150,000 people die from climate change already, with much of this concentrated in Southern and Sub-Sarahan Africa. Projections include ~250,000 deaths p/y between 2030-50 and $2-4B of direct damage to health p/y by 2030 <span class="citation">(<a href="#ref-world2014quantitative" role="doc-biblioref">World-Health-Organization and others 2014</a>)</span>. This is considered conservative by some and estimates vary considerably <span class="citation">(<a href="#ref-parncutt2019human" role="doc-biblioref">Parncutt 2019</a>)</span>.</p>
 <p>Many statistical models in environmental science often rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents tremendous risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers increasingly rely on.</p>
-<p>Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modelled. Conditional density estimation with normalising flows can help meet this need.</p>
+<p>Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modelled. This poster explains how<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Conditional density estimation with normalising flows can help meet this need.</p>
 </div>
 <div id="conditional-density-estimation" class="section level2">
 <h2>Conditional Density Estimation</h2>
 <!-- add figure caption: Animation of CDE using 'Mexican hat' data -->
 <p><img src="figures/qr.png" width="30%" style="float:right; padding:10px" /></p>
-<p>Conditional density estimation is a <em>task</em> for which there are methods in statistics, machine learning (ML) and deep learning (DL). It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate and generated a confidence or credible interval, we are instead concerned with predicting the full conditional density of the data for a given query point, thus representing an improved form of <strong>uncertainty quantification</strong>. Figure  demonstrates kernel CDE <span class="citation">(<a href="#ref-bashtannyk2001bandwidth" role="doc-biblioref">Bashtannyk and Hyndman 2001</a>)</span> <span class="citation">(<a href="#ref-rosenblatt1969conditional" role="doc-biblioref">Rosenblatt 1969</a>)</span> using the old faithful dataset via the <code>hdrcde</code> R package. Early methods included KCDE and discretization of the target variable via class probability estimators <span class="citation">(<a href="#ref-frank2009conditional" role="doc-biblioref">Frank and Bouckaert 2009</a>)</span> (Figure ). Modern methods for CDE include Random Forest-CDE [@], Mixture Density Networks [@] and</p>
+<p>Conditional density estimation is a <em>task</em> for which there are methods in statistics, machine learning and deep learning. It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate and generated a confidence or credible interval, we are instead concerned with predicting the full conditional density of the data for a given query point, thus representing an improved form of <strong>uncertainty quantification</strong>. Figure  demonstrates kernel CDE <span class="citation">(<a href="#ref-bashtannyk2001bandwidth" role="doc-biblioref">Bashtannyk and Hyndman 2001</a>)</span> <span class="citation">(<a href="#ref-rosenblatt1969conditional" role="doc-biblioref">Rosenblatt 1969</a>)</span> using the old faithful dataset via the <code>hdrcde</code> R package. Early methods included KCDE and discretization of the target variable via class probability estimators <span class="citation">(<a href="#ref-frank2009conditional" role="doc-biblioref">Frank and Bouckaert 2009</a>)</span> (Figure ). Modern methods for CDE include Random Forest-CDE <span class="citation">(<a href="#ref-pospisil2018rfcde" role="doc-biblioref">Pospisil and Lee 2018</a>)</span>, Mixture Density Networks <span class="citation">(<a href="#ref-carney2005predicting" role="doc-biblioref">Carney et al. 2005</a>)</span> and GMMs <span class="citation">(<a href="#ref-gilardi2002conditional" role="doc-biblioref">Gilardi, Bengio, and Kanevski 2002</a>)</span>.</p>
 <div class="figure"><span id="fig:pressure"></span>
 <img src="cde_nfs_files/figure-html/pressure-1.png" alt="\label{fig:figs}Demonstration of KCDE estimates" width="100%" />
 <p class="caption">
@@ -433,7 +436,7 @@ Figure 1: Demonstration of KCDE estimates
 <h2>Motivation</h2>
 <p>Combining CDE with NFs is a natural extension of progress achieved in the separate fields of CDE and NF research. There has been some research at the intersection of these areas such as CDE with Bayesian NFs [@],[@],[@], but progress has been limited by the following factors:</p>
 <ul>
-<li>Computational difficulty of scaling NFs to large data sets [@]</li>
+<li>Computational difficulty of scaling NFs to large data sets. For example, the latest continuous normalising flows models are restricted to usage on compartively small benchmark sets</li>
 <li>Few practical applications of CDE mainstream environmental science [@]</li>
 <li>DL focus is often in areas of traditional strength for the field, such as image data [@]</li>
 </ul>
@@ -441,7 +444,7 @@ Figure 1: Demonstration of KCDE estimates
 </div>
 <div id="abbreviations" class="section level2">
 <h2>Abbreviations</h2>
-<p>CDE / ML / DL / VAEs / GANs / KL</p>
+<p>CDE / ML / DL / MLR / VAEs / GANs / KL / GMMs</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
@@ -455,6 +458,9 @@ Carney, Michael, Pádraig Cunningham, Jim Dowling, and Ciaran Lee. 2005. <span>�
 <div id="ref-frank2009conditional" class="csl-entry">
 Frank, Eibe, and Remco R Bouckaert. 2009. <span>“Conditional Density Estimation with Class Probability Estimators.”</span> In <em>Asian Conference on Machine Learning</em>, 65–81. Springer.
 </div>
+<div id="ref-gilardi2002conditional" class="csl-entry">
+Gilardi, Nicolas, Samy Bengio, and Mikhail Kanevski. 2002. <span>“Conditional Gaussian Mixture Models for Environmental Risk Mapping.”</span> In <em>Proceedings of the 12th IEEE Workshop on Neural Networks for Signal Processing</em>, 777–86. IEEE.
+</div>
 <div id="ref-gonccalves2020training" class="csl-entry">
 Gonçalves, Pedro J, Jan-Matthis Lueckmann, Michael Deistler, Marcel Nonnenmacher, Kaan Öcal, Giacomo Bassetto, Chaitanya Chintaluri, et al. 2020. <span>“Training Deep Neural Density Estimators to Identify Mechanistic Models of Neural Dynamics.”</span> <em>Elife</em> 9: e56261.
 </div>
@@ -463,6 +469,9 @@ Kobyzev, Ivan, Simon Prince, and Marcus Brubaker. 2020. <span>“Normalizing Flo
 </div>
 <div id="ref-parncutt2019human" class="csl-entry">
 Parncutt, Richard. 2019. <span>“The Human Cost of Anthropogenic Global Warming: Semi-Quantitative Prediction and the 1,000-Tonne Rule.”</span> <em>Frontiers in Psychology</em> 10: 2323.
+</div>
+<div id="ref-pospisil2018rfcde" class="csl-entry">
+Pospisil, Taylor, and Ann B Lee. 2018. <span>“Rfcde: Random Forests for Conditional Density Estimation.”</span> <em>arXiv Preprint arXiv:1804.05753</em>.
 </div>
 <div id="ref-rojas2005conditional" class="csl-entry">
 Rojas, Alex L, Christopher R Genovese, Christopher J Miller, Robert Nichol, and Larry Wasserman. 2005. <span>“Conditional Density Estimation Using Finite Mixture Models with an Application to Astrophysics.”</span> Carnegie Mellon University, Pittsburgh, USA.[Online]. Available: http .
@@ -483,6 +492,12 @@ Wang, Xiao-Feng, and Deping Ye. 2015. <span>“Conditional Density Estimation in
 World-Health-Organization, and others. 2014. <span>“Quantitative Risk Assessment of the Effects of Climate Change on Selected Causes of Death, 2030s and 2050s.”</span>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Poster produced via the <code>posterdown</code> package. The code to reproduce this poster is at <strong><a href="https://github.com/MattSkiff/nf_cde_poster" class="uri">https://github.com/MattSkiff/nf_cde_poster</a></strong>. </font><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 
 </div>
