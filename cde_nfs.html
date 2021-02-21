@@ -43,7 +43,7 @@ padding: 0px;
 width: 23.4in;
 height: 36in;
 text-align: justify;
-font-size: 40px;
+font-size: 35px;
 line-height: 1.05;
 }
 /* RMarkdown Class Styles */
@@ -408,39 +408,65 @@ margin-left: 0em;
 <p><br></p>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>The World Health Organisation estimates 150,000 people die from climate change already, with much of this concentrated in Southern and Sub-Sarahan Africa. Projections include ~250,000 deaths p/y between 2030-50 and $2-4B of direct damage to health p/y by 2030 <span class="citation">(<a href="#ref-world2014quantitative" role="doc-biblioref">World-Health-Organization and others 2014</a>)</span>. This is considered conservative by some and estimates vary considerably <span class="citation">(<a href="#ref-parncutt2019human" role="doc-biblioref">Parncutt 2019</a>)</span>.</p>
-<p>Many statistical models in environmental science often rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents tremendous risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers increasingly rely on.</p>
-<p>Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modelled. This poster explains how<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Conditional density estimation with normalising flows can help meet this need.</p>
+<p>The World Health Organisation estimates 150,000 people die from climate change already, with much of this concentrated in Southern and Sub-Sarahan Africa. Projections include ~250,000 deaths p/y between 2030-50 and $2-4B of direct damage to health p/y by 2030 <span class="citation"><a href="#ref-world2014quantitative" role="doc-biblioref">[1]</a></span>. This is considered conservative by some and estimates vary considerably <span class="citation"><a href="#ref-parncutt2019human" role="doc-biblioref">[2]</a></span>.</p>
+<p>Statistical models in environmental science rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers rely on.</p>
+<p>Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modeled. This poster explains how<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> conditional density estimation with normalising flows can help meet this need.</p>
 </div>
 <div id="conditional-density-estimation" class="section level2">
 <h2>Conditional Density Estimation</h2>
 <!-- add figure caption: Animation of CDE using 'Mexican hat' data -->
-<p><img src="figures/qr.png" width="30%" style="float:right; padding:10px" /></p>
-<p>Conditional density estimation is a <em>task</em> for which there are methods in statistics, machine learning and deep learning. It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate and generated a confidence or credible interval, we are instead concerned with predicting the full conditional density of the data for a given query point, thus representing an improved form of <strong>uncertainty quantification</strong>. Figure  demonstrates kernel CDE <span class="citation">(<a href="#ref-bashtannyk2001bandwidth" role="doc-biblioref">Bashtannyk and Hyndman 2001</a>)</span> <span class="citation">(<a href="#ref-rosenblatt1969conditional" role="doc-biblioref">Rosenblatt 1969</a>)</span> using the old faithful dataset via the <code>hdrcde</code> R package. Early methods included KCDE and discretization of the target variable via class probability estimators <span class="citation">(<a href="#ref-frank2009conditional" role="doc-biblioref">Frank and Bouckaert 2009</a>)</span> (Figure ). Modern methods for CDE include Random Forest-CDE <span class="citation">(<a href="#ref-pospisil2018rfcde" role="doc-biblioref">Pospisil and Lee 2018</a>)</span>, Mixture Density Networks <span class="citation">(<a href="#ref-carney2005predicting" role="doc-biblioref">Carney et al. 2005</a>)</span> and GMMs <span class="citation">(<a href="#ref-gilardi2002conditional" role="doc-biblioref">Gilardi, Bengio, and Kanevski 2002</a>)</span>.</p>
-<div class="figure"><span id="fig:pressure"></span>
-<img src="cde_nfs_files/figure-html/pressure-1.png" alt="\label{fig:figs}Demonstration of KCDE estimates" width="100%" />
+<div class="figure"><span id="fig:qr"></span>
+<img src="figures/qr.png" alt="\label{fig:qr}QR code for CDE animation" width="30%" style="float:right; padding:10px" />
 <p class="caption">
-Figure 1: Demonstration of KCDE estimates
+Figure 1: QR code for CDE animation
+</p>
+</div>
+<p><span class="math display">\[  \]</span></p>
+<p>Conditional density estimation is a <em>task</em> for which there are methods in statistics, machine learning and deep learning. It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate <span class="math inline">\(\hat{y}\)</span> and generated a confidence or credible interval <span class="math inline">\(\hat{y}\pm CI\)</span>, we are instead concerned with predicting the full conditional density <span class="math inline">\(p(y|x)\)</span> of the data for a given query point <span class="math inline">\(x\)</span>, thus representing an improved form of <strong>uncertainty quantification</strong>. Figure <a href="#fig:cde">2</a> demonstrates kernel CDE <span class="citation"><a href="#ref-bashtannyk2001bandwidth" role="doc-biblioref">[3]</a></span> <span class="citation"><a href="#ref-rosenblatt1969conditional" role="doc-biblioref">[4]</a></span> using the old faithful greyser dataset via the <code>hdrcde</code> R package. Early CDE methods included KCDE and discretisation of the target variable via class probability estimators <span class="citation"><a href="#ref-frank2009conditional" role="doc-biblioref">[5]</a></span> (Figure <a href="#fig:qr">1</a>). Modern methods for CDE include Random Forest-CDE <span class="citation"><a href="#ref-pospisil2018rfcde" role="doc-biblioref">[6]</a></span>, Mixture Density Networks <span class="citation"><a href="#ref-carney2005predicting" role="doc-biblioref">[7]</a></span> and GMMs <span class="citation"><a href="#ref-gilardi2002conditional" role="doc-biblioref">[8]</a></span>.</p>
+<div class="figure"><span id="fig:cde"></span>
+<img src="cde_nfs_files/figure-html/cde-1.png" alt="\label{fig:cde}Demonstration of KCDE estimates" width="100%" />
+<p class="caption">
+Figure 2: Demonstration of KCDE estimates
 </p>
 </div>
 </div>
 <div id="normalising-flows" class="section level2">
 <h2>Normalising Flows</h2>
-<p>Normalising flows are a recent <em>class of models</em> <span class="citation">(<a href="#ref-kobyzev2020normalizing" role="doc-biblioref">Kobyzev, Prince, and Brubaker 2020</a>)</span> that entail the use of a sequence of invertible, differentiable, probability transformations applied to a base distribution (typically a simple gaussian) in order to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). The number of layers usually corresponds to the expressiveness of the trained distribution (figure ). Normalising flows came to prominence for their relative efficiency in both generative sampling and density evaluation. In terms of generative modelling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not generally efficient in terms of density evaluation (inference).</p>
-<p><span class="math display">\[ equation for  \]</span></p>
-<p>Normalising flows are usually trained by minimizing the KL-divergence via standard optimisation techniques, like SGD. The chronology of NF</p>
+<p>Normalising flows are a recent <em>class of models</em> <span class="citation"><a href="#ref-kobyzev2020normalizing" role="doc-biblioref">[9]</a></span> that entail the use of a sequence of invertible, differentiable, probability transformations applied to a base distribution (typically a simple gaussian) in order to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous).</p>
+<blockquote>
+<p>By the term normalising flows people mean bijections which are convenient to compute, invert, and calculate the determinent of their Jacobian.</p>
+</blockquote>
+<blockquote>
+<footer>
+— Kobyzev et al, “Normalizing Flows: An Introduction and Review of Current Methods” (2020)
+</footer>
+</blockquote>
+<p>The number of layers corresponds to the expressiveness of the trained distribution, as does the class of model (figure <a href="#fig:nfs">3</a>. Normalising flows came to prominence for their relative efficiency in both generative sampling and density evaluation. In terms of generative modeling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not generally efficient in terms of density evaluation.</p>
+<p><span class="math display">\[  \]</span></p>
+<div class="figure"><span id="fig:nfs"></span>
+<img src="cde_nfs_files/figure-html/nfs-1.png" alt="\label{fig:nfs}Expressiveness of NFs varies by class of model" width="100%" />
+<p class="caption">
+Figure 3: Expressiveness of NFs varies by class of model
+</p>
+</div>
+<p>Normalising flows are trained by minimising the KL-divergence via standard optimisation techniques, like SGD. The chronology of models using NFs is shown in Figure . There are three properties of concern when designing NFs:</p>
+<ul>
+<li>Efficiency</li>
+<li>Expressiveness</li>
+<li>Invertibility</li>
+</ul>
 <p>In ML/DL</p>
 <p>Practically:</p>
 </div>
-<div id="motivation" class="section level2">
-<h2>Motivation</h2>
-<p>Combining CDE with NFs is a natural extension of progress achieved in the separate fields of CDE and NF research. There has been some research at the intersection of these areas such as CDE with Bayesian NFs [@],[@],[@], but progress has been limited by the following factors:</p>
+<div id="combining-nfs-with-cde" class="section level2">
+<h2>Combining NFs with CDE</h2>
+<p>This intersection is a natural extension of progress in the area CDE and NFs. Some work already exists, such as CDE with Bayesian NFs <span class="citation"><a href="#ref-trippe2018conditional" role="doc-biblioref">[10]</a></span>, [@],[@], as a section describing CDE using MAFs <span class="citation"><a href="#ref-papamakarios2017masked" role="doc-biblioref">[11]</a></span> but progress has been limited by the following factors:</p>
 <ul>
-<li>Computational difficulty of scaling NFs to large data sets. For example, the latest continuous normalising flows models are restricted to usage on compartively small benchmark sets</li>
-<li>Few practical applications of CDE mainstream environmental science [@]</li>
-<li>DL focus is often in areas of traditional strength for the field, such as image data [@]</li>
+<li>Computational difficulty of scaling NFs to large data sets. For example, the latest continuous normalising flows models are restricted to usage on comparatively small benchmark sets</li>
+<li>Few practical applications of CDE in mainstream environmental science</li>
+<li>DL focus is often in areas of traditional strength for the field, such as image data</li>
 </ul>
-<p>CDE has found use in finance <span class="citation">(<a href="#ref-rothfuss2019conditional" role="doc-biblioref">Rothfuss et al. 2019</a>)</span>, astropysics <span class="citation">(<a href="#ref-rojas2005conditional" role="doc-biblioref">Rojas et al. 2005</a>)</span>, environmental science <span class="citation">(<a href="#ref-carney2005predicting" role="doc-biblioref">Carney et al. 2005</a>)</span>, neurodynamics <span class="citation">(<a href="#ref-gonccalves2020training" role="doc-biblioref">Gonçalves et al. 2020</a>)</span>, genetics <span class="citation">(<a href="#ref-wang2015conditional" role="doc-biblioref">Wang and Ye 2015</a>)</span> and sociology <span class="citation">(<a href="#ref-trippe2018conditional" role="doc-biblioref">Trippe and Turner 2018</a>)</span>.</p>
+<p>CDE has found use in finance <span class="citation"><a href="#ref-rothfuss2019conditional" role="doc-biblioref">[12]</a></span>, astropysics <span class="citation"><a href="#ref-rojas2005conditional" role="doc-biblioref">[13]</a></span>, environmental science <span class="citation"><a href="#ref-carney2005predicting" role="doc-biblioref">[7]</a></span>, neurodynamics <span class="citation"><a href="#ref-gonccalves2020training" role="doc-biblioref">[14]</a></span>, genetics <span class="citation"><a href="#ref-wang2015conditional" role="doc-biblioref">[15]</a></span> and sociology <span class="citation"><a href="#ref-trippe2018conditional" role="doc-biblioref">[10]</a></span>.</p>
 </div>
 <div id="abbreviations" class="section level2">
 <h2>Abbreviations</h2>
@@ -448,55 +474,58 @@ Figure 1: Demonstration of KCDE estimates
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-bashtannyk2001bandwidth" class="csl-entry">
-Bashtannyk, David M, and Rob J Hyndman. 2001. <span>“Bandwidth Selection for Kernel Conditional Density Estimation.”</span> <em>Computational Statistics &amp; Data Analysis</em> 36 (3): 279–98.
-</div>
-<div id="ref-carney2005predicting" class="csl-entry">
-Carney, Michael, Pádraig Cunningham, Jim Dowling, and Ciaran Lee. 2005. <span>“Predicting Probability Distributions for Surf Height Using an Ensemble of Mixture Density Networks.”</span> In <em>Proceedings of the 22nd International Conference on Machine Learning</em>, 113–20.
-</div>
-<div id="ref-frank2009conditional" class="csl-entry">
-Frank, Eibe, and Remco R Bouckaert. 2009. <span>“Conditional Density Estimation with Class Probability Estimators.”</span> In <em>Asian Conference on Machine Learning</em>, 65–81. Springer.
-</div>
-<div id="ref-gilardi2002conditional" class="csl-entry">
-Gilardi, Nicolas, Samy Bengio, and Mikhail Kanevski. 2002. <span>“Conditional Gaussian Mixture Models for Environmental Risk Mapping.”</span> In <em>Proceedings of the 12th IEEE Workshop on Neural Networks for Signal Processing</em>, 777–86. IEEE.
-</div>
-<div id="ref-gonccalves2020training" class="csl-entry">
-Gonçalves, Pedro J, Jan-Matthis Lueckmann, Michael Deistler, Marcel Nonnenmacher, Kaan Öcal, Giacomo Bassetto, Chaitanya Chintaluri, et al. 2020. <span>“Training Deep Neural Density Estimators to Identify Mechanistic Models of Neural Dynamics.”</span> <em>Elife</em> 9: e56261.
-</div>
-<div id="ref-kobyzev2020normalizing" class="csl-entry">
-Kobyzev, Ivan, Simon Prince, and Marcus Brubaker. 2020. <span>“Normalizing Flows: An Introduction and Review of Current Methods.”</span> <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>.
+<div id="refs" class="references csl-bib-body">
+<div id="ref-world2014quantitative" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">World-Health-Organization and others, <span>“Quantitative risk assessment of the effects of climate change on selected causes of death, 2030s and 2050s,”</span> 2014.</div>
 </div>
 <div id="ref-parncutt2019human" class="csl-entry">
-Parncutt, Richard. 2019. <span>“The Human Cost of Anthropogenic Global Warming: Semi-Quantitative Prediction and the 1,000-Tonne Rule.”</span> <em>Frontiers in Psychology</em> 10: 2323.
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R. Parncutt, <span>“The human cost of anthropogenic global warming: Semi-quantitative prediction and the 1,000-tonne rule,”</span> <em>Frontiers in psychology</em>, vol. 10, p. 2323, 2019.</div>
 </div>
-<div id="ref-pospisil2018rfcde" class="csl-entry">
-Pospisil, Taylor, and Ann B Lee. 2018. <span>“Rfcde: Random Forests for Conditional Density Estimation.”</span> <em>arXiv Preprint arXiv:1804.05753</em>.
-</div>
-<div id="ref-rojas2005conditional" class="csl-entry">
-Rojas, Alex L, Christopher R Genovese, Christopher J Miller, Robert Nichol, and Larry Wasserman. 2005. <span>“Conditional Density Estimation Using Finite Mixture Models with an Application to Astrophysics.”</span> Carnegie Mellon University, Pittsburgh, USA.[Online]. Available: http .
+<div id="ref-bashtannyk2001bandwidth" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">D. M. Bashtannyk and R. J. Hyndman, <span>“Bandwidth selection for kernel conditional density estimation,”</span> <em>Computational Statistics &amp; Data Analysis</em>, vol. 36, no. 3, pp. 279–298, 2001.</div>
 </div>
 <div id="ref-rosenblatt1969conditional" class="csl-entry">
-Rosenblatt, Murray. 1969. <span>“Conditional Probability Density and Regression Estimators.”</span> <em>Multivariate Analysis II</em> 25: 31.
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">M. Rosenblatt, <span>“Conditional probability density and regression estimators,”</span> <em>Multivariate analysis II</em>, vol. 25, p. 31, 1969.</div>
 </div>
-<div id="ref-rothfuss2019conditional" class="csl-entry">
-Rothfuss, Jonas, Fabio Ferreira, Simon Walther, and Maxim Ulrich. 2019. <span>“Conditional Density Estimation with Neural Networks: Best Practices and Benchmarks.”</span> <em>arXiv Preprint arXiv:1903.00954</em>.
+<div id="ref-frank2009conditional" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">E. Frank and R. R. Bouckaert, <span>“Conditional density estimation with class probability estimators,”</span> in <em>Asian conference on machine learning</em>, 2009, pp. 65–81.</div>
+</div>
+<div id="ref-pospisil2018rfcde" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">T. Pospisil and A. B. Lee, <span>“Rfcde: Random forests for conditional density estimation,”</span> <em>arXiv preprint arXiv:1804.05753</em>, 2018.</div>
+</div>
+<div id="ref-carney2005predicting" class="csl-entry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">M. Carney, P. Cunningham, J. Dowling, and C. Lee, <span>“Predicting probability distributions for surf height using an ensemble of mixture density networks,”</span> in <em>Proceedings of the 22nd international conference on machine learning</em>, 2005, pp. 113–120.</div>
+</div>
+<div id="ref-gilardi2002conditional" class="csl-entry">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">N. Gilardi, S. Bengio, and M. Kanevski, <span>“Conditional gaussian mixture models for environmental risk mapping,”</span> in <em>Proceedings of the 12th IEEE workshop on neural networks for signal processing</em>, 2002, pp. 777–786.</div>
+</div>
+<div id="ref-kobyzev2020normalizing" class="csl-entry">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">I. Kobyzev, S. Prince, and M. Brubaker, <span>“Normalizing flows: An introduction and review of current methods,”</span> <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>, 2020.</div>
 </div>
 <div id="ref-trippe2018conditional" class="csl-entry">
-Trippe, Brian L, and Richard E Turner. 2018. <span>“Conditional Density Estimation with Bayesian Normalising Flows.”</span> <em>arXiv Preprint arXiv:1802.04908</em>.
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">B. L. Trippe and R. E. Turner, <span>“Conditional density estimation with bayesian normalising flows,”</span> <em>arXiv preprint arXiv:1802.04908</em>, 2018.</div>
+</div>
+<div id="ref-papamakarios2017masked" class="csl-entry">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">G. Papamakarios, T. Pavlakou, and I. Murray, <span>“Masked autoregressive flow for density estimation,”</span> <em>arXiv preprint arXiv:1705.07057</em>, 2017.</div>
+</div>
+<div id="ref-rothfuss2019conditional" class="csl-entry">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">J. Rothfuss, F. Ferreira, S. Walther, and M. Ulrich, <span>“Conditional density estimation with neural networks: Best practices and benchmarks,”</span> <em>arXiv preprint arXiv:1903.00954</em>, 2019.</div>
+</div>
+<div id="ref-rojas2005conditional" class="csl-entry">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">A. L. Rojas, C. R. Genovese, C. J. Miller, R. Nichol, and L. Wasserman, <span>“Conditional density estimation using finite mixture models with an application to astrophysics.”</span> Carnegie Mellon University, Pittsburgh, USA.[Online]. Available: http ., 2005.</div>
+</div>
+<div id="ref-gonccalves2020training" class="csl-entry">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">P. J. Gonçalves <em>et al.</em>, <span>“Training deep neural density estimators to identify mechanistic models of neural dynamics,”</span> <em>Elife</em>, vol. 9, p. e56261, 2020.</div>
 </div>
 <div id="ref-wang2015conditional" class="csl-entry">
-Wang, Xiao-Feng, and Deping Ye. 2015. <span>“Conditional Density Estimation in Measurement Error Problems.”</span> <em>Journal of Multivariate Analysis</em> 133: 38–50.
-</div>
-<div id="ref-world2014quantitative" class="csl-entry">
-World-Health-Organization, and others. 2014. <span>“Quantitative Risk Assessment of the Effects of Climate Change on Selected Causes of Death, 2030s and 2050s.”</span>
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">X.-F. Wang and D. Ye, <span>“Conditional density estimation in measurement error problems,”</span> <em>Journal of multivariate analysis</em>, vol. 133, pp. 38–50, 2015.</div>
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Poster produced via the <code>posterdown</code> package. The code to reproduce this poster is at <strong><a href="https://github.com/MattSkiff/nf_cde_poster" class="uri">https://github.com/MattSkiff/nf_cde_poster</a></strong>. </font><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Poster produced via the <em>posterdown</em> package. The code to reproduce this poster is at <strong><a href="https://github.com/MattSkiff/nf_cde_poster" class="uri">https://github.com/MattSkiff/nf_cde_poster</a></strong>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

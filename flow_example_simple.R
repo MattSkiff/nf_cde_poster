@@ -38,6 +38,10 @@ linear_transform <- function(x,A,b) {
   return(A %*% x + b)
 }
 
+householder_transform <- function(X,v) {
+  
+}
+
 # generative direction
 mvn_linear_transform_A_diag.mat <- linear_transform(x = mvn.mat,A = A_diag,b = b_diag)
 mvn_linear_transform_A_diag.df <- as.data.frame(mvn_linear_transform_A_diag.mat)
@@ -65,6 +69,3 @@ plot_explanation <- "Example of a simple normalising flow\n in the generative di
 t <- textGrob(plot_explanation)
 final <- grid.arrange(p1,p2,p3,t,nrow = 2)
 ggsave("linear_flow_diag.png",plot = final,width = 25,height = 25,units = "cm")
-
-
-

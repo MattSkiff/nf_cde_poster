@@ -11,7 +11,7 @@ poster_width: "23.4in"
 main_fontfamily: "Helvetica"
 main_textsize: "130px"
 author_textsize: "1.11em"
-body_textsize: "40px"
+body_textsize: "35px"
 author:
   - name: "Matthew Skiffington"
     main: true
@@ -32,6 +32,7 @@ output:
     number_sections: false
 bibliography: bibliography.bibtex
 link-citations: true
+csl: ieee.csl
 ---
 
 <!-- logo sizing -->
@@ -68,22 +69,24 @@ knitr::opts_knit$set(root.dir = 'G:\\My Drive\\PhD\\posters\\')
 
 The World Health Organisation estimates 150,000 people die from climate change already, with much of this concentrated in Southern and Sub-Sarahan Africa. Projections include ~250,000 deaths p/y between 2030-50 and $2-4B of direct damage to health p/y by 2030 [@world2014quantitative]. This is considered conservative by some and estimates vary considerably [@parncutt2019human].
 
-Many statistical models in environmental science often rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents tremendous risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers increasingly rely on. 
+Statistical models in environmental science rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers rely on. 
 
-Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modelled. This poster explains how[^1] Conditional density estimation with normalising flows can help meet this need.
+Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modeled. This poster explains how[^1] conditional density estimation with normalising flows can help meet this need.
 
 ## Conditional Density Estimation
 
 <!-- add figure caption: Animation of CDE using 'Mexican hat' data --> 
 
-```{r cde_giff_qr,out.extra='style="float:right; padding:10px"',out.width="30%",echo=FALSE}
+```{r qr,out.extra='style="float:right; padding:10px"',fig.cap="\\label{fig:qr}QR code for CDE animation",out.width="30%",echo=FALSE}
 # All defaults
 knitr::include_graphics('figures\\qr.png')
 ```
 
-Conditional density estimation is a *task* for which there are methods in statistics, machine learning and deep learning. It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate and generated a confidence or credible interval, we are instead concerned with predicting the full conditional density of the data for a given query point, thus representing an improved form of **uncertainty quantification**. Figure \ref{fig:figs} demonstrates kernel CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the old faithful dataset via the `hdrcde` R package. Early methods included KCDE and discretisation of the target variable via class probability estimators [@frank2009conditional] (Figure \ref{fig:qr}). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde], Mixture Density Networks [@carney2005predicting] and GMMs [@gilardi2002conditional]. 
+$$  $$
 
-```{r pressure, echo=FALSE, fig.cap="\\label{fig:figs}Demonstration of KCDE estimates", fig.height=4, message=FALSE, warning=FALSE, out.width="100%"}
+Conditional density estimation is a *task* for which there are methods in statistics, machine learning and deep learning. It is a generalisation of conditional mean estimation often performed with MLR. However, in CDE, instead of predicting a point estimate $\hat{y}$ and generated a confidence or credible interval $\hat{y}\pm CI$, we are instead concerned with predicting the full conditional density $p(y|x)$ of the data for a given query point $x$, thus representing an improved form of **uncertainty quantification**. Figure \@ref(fig:cde) demonstrates kernel CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the old faithful greyser dataset via the `hdrcde` R package. Early CDE methods included KCDE and discretisation of the target variable via class probability estimators [@frank2009conditional] (Figure \@ref(fig:qr)). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde], Mixture Density Networks [@carney2005predicting] and GMMs [@gilardi2002conditional]. 
+
+```{r cde, echo=FALSE, fig.cap="\\label{fig:cde}Demonstration of KCDE estimates", fig.height=4, message=FALSE, warning=FALSE, out.width="100%"}
 library(hdrcde)
 library(ggplot2)
 library(gridExtra)
@@ -119,15 +122,89 @@ grid.arrange(p1, p2, nrow = 1)
 
 ## Normalising Flows
 
-Normalising flows are a recent *class of models* [@kobyzev2020normalizing] that entail the use of a sequence of invertible, differentiable, probability transformations applied to a base distribution (typically a simple gaussian) in order to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). The number of layers usually corresponds to the expressiveness of the trained distribution (figure \ref{fig:nfs_expressive}). Normalising flows came to prominence for their relative efficiency in both generative sampling and density evaluation. In terms of generative modeling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not generally efficient in terms of density evaluation. 
+Normalising flows are a recent *class of models* [@kobyzev2020normalizing] that entail the use of a sequence of invertible, differentiable, probability transformations applied to a base distribution (typically a simple gaussian) in order to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). 
 
-$$ equation for  $$
+> By the term normalising flows people mean bijections which are convenient to compute, invert, and calculate the determinent of their Jacobian.
 
-```{r nfs_expressivity, echo=FALSE, fig.cap="\\label{fig:nfs_expressive}Demonstration of NF expressiveness", fig.height=4, message=FALSE, warning=FALSE, out.width="100%"}
+>  `r tufte::quote_footer('--- Kobyzev et al, "Normalizing Flows: An Introduction and Review of Current Methods" (2020)')`
 
+The number of layers corresponds to the expressiveness of the trained distribution, as does the class of model (figure \@ref(fig:nfs). Normalising flows came to prominence for their relative efficiency in both generative sampling and density evaluation. In terms of generative modeling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not generally efficient in terms of density evaluation. 
+
+$$  $$
+
+```{r nfs, echo=FALSE, fig.cap="\\label{fig:nfs}Expressiveness of NFs varies by class of model", fig.height=8, message=FALSE, warning=FALSE, out.width="100%",cache=TRUE}
+# Simple Flow visualisation
+
+library(ggplot2)
+library(MASS)
+library(gridExtra)
+library(lattice)
+library(grid)
+
+n <- 1000
+
+# sampling z from base distribution
+mvn.mat <- mvrnorm(n = n,mu = c(0,0),Sigma = diag(2),tol = 1e-6,empirical = TRUE)
+
+mvr_sample.df <- as.data.frame(mvn.mat)
+
+p1 <- ggplot(mvr_sample.df) +
+        geom_point(mapping = aes(x = V1,y = V2),alpha = 0.1) +
+        theme_light() +
+        labs(x = "x",y = "y",title = "Sample from MVN",caption = "n = 10k",subtitle = "Base distribution") +
+        scale_x_continuous(limits = c(-5,5), expand = c(0, 0)) +
+        scale_y_continuous(limits = c(-5,5), expand = c(0, 0))  + 
+        theme(legend.position = "none") 
+
+# diagonal matrix for A
+A_diag <- diag(x = runif(n,min = 0,max = 3))
+b_diag <- as.integer(runif(1,min = -3, max = 3))
+
+# triangular matrix for A - more expressive
+A_tri <- matrix(0, n,n)
+# source: https://stackoverflow.com/questions/9282258/how-to-fill-matrix-with-random-numbers-in-r/9282447
+A_tri[row(A_tri)+col(A_tri) >=n+1] <- (row(A_tri)+col(A_tri) -n+1)[row(A_tri)+col(A_tri)>=n+1]/n
+
+# random triangular matrix - exp dist
+A_tri_exp <- upper.tri(matrix(rexp(n*n, rate=.1), ncol=n))
+
+linear_transform <- function(x,A,b) {
+  return(A %*% x + b)
+}
+
+# generative direction
+mvn_linear_transform_A_diag.mat <- linear_transform(x = mvn.mat,A = A_diag,b = b_diag)
+mvn_linear_transform_A_diag.df <- as.data.frame(mvn_linear_transform_A_diag.mat)
+
+mvn_linear_transform_A_tri_exp.mat <- linear_transform(x = mvn.mat,A = A_tri_exp,b = b_diag)
+mvn_linear_transform_A_tri_exp.df <- as.data.frame(mvn_linear_transform_A_tri_exp.mat)
+
+p2 <- ggplot(mvn_linear_transform_A_diag.df) +
+        geom_point(mapping = aes(x = V1,y = V2),alpha = 0.1) +
+        theme_light() +
+        labs(x = "x",y = "y",title = "Linear transform on sample",caption = "n = 10k",subtitle = "Diagonal matrix for transformation matrix (A)") +
+        scale_x_continuous(expand = c(0, 0)) +
+        scale_y_continuous(expand = c(0, 0))  + 
+        theme(legend.position = "none")
+
+p3 <- ggplot(mvn_linear_transform_A_tri_exp.df) +
+  geom_point(mapping = aes(x = V1,y = V2),alpha = 0.1) +
+  theme_light() +
+  labs(x = "x",y = "y",title = "Linear transform on sample",caption = "n = 10k",subtitle = "Using triangular matrix for A (sampled from exp. dist.)") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0))  + 
+  theme(legend.position = "none")
+
+plot_explanation <- "Example of a simple normalising flow\n in the generative direction for linear flows,\n illustrating the difference in expressiveness\n between diagonal and triangular matrices"
+t <- textGrob(plot_explanation)
+final <- grid.arrange(p1,p2,p3,t,nrow = 2)
 ```
 
-Normalising flows are usually trained by minimising the KL-divergence via standard optimisation techniques, like SGD. The chronology of NF
+Normalising flows are trained by minimising the KL-divergence via standard optimisation techniques, like SGD. The chronology of models using NFs is shown in Figure \ref{fig:nf_chron}. There are three properties of concern when designing NFs:
+
+* Efficiency
+* Expressiveness
+* Invertibility 
 
 In ML/DL 
 
@@ -135,11 +212,11 @@ Practically:
 
 ## Combining NFs with CDE
 
-This intersection is a natural extension of progress achieved in the separate fields of CDE and NF research. Some research already exists, such as CDE with Bayesian NFs [@],[@],[@], as a section describing CDE using MAFs [@] but progress has been limited by the following factors:
+This intersection is a natural extension of progress in the area CDE and NFs. Some work already exists, such as CDE with Bayesian NFs [@trippe2018conditional], [@],[@], as a section describing CDE using MAFs [@papamakarios2017masked] but progress has been limited by the following factors:
 
-* Computational difficulty of scaling NFs to large data sets. For example, the latest continuous normalising flows models are restricted to usage on compartively small benchmark sets
-* Few practical applications of CDE mainstream environmental science [@]
-* DL focus is often in areas of traditional strength for the field, such as image data [@]
+* Computational difficulty of scaling NFs to large data sets. For example, the latest continuous normalising flows models are restricted to usage on comparatively small benchmark sets
+* Few practical applications of CDE in mainstream environmental science
+* DL focus is often in areas of traditional strength for the field, such as image data 
 
 
 CDE has found use in finance [@rothfuss2019conditional], astropysics [@rojas2005conditional], environmental science [@carney2005predicting], neurodynamics [@gonccalves2020training], genetics [@wang2015conditional] and sociology [@trippe2018conditional]. 
@@ -150,7 +227,4 @@ CDE / ML / DL / MLR / VAEs / GANs / KL / GMMs
 
 ## References
 
- 
-
-[^1]:  Poster produced via the `posterdown` package. The code to reproduce this poster is at **https://github.com/MattSkiff/nf_cde_poster**. </font>
-
+[^1]:  Poster produced via the *posterdown* package. The code to reproduce this poster is at **https://github.com/MattSkiff/nf_cde_poster**.
