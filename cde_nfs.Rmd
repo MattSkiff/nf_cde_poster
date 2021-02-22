@@ -20,7 +20,7 @@ author:
 affiliation:
     address: Department of Computer Science, University of Waikato
 main_findings: 
-  - "An Exploration of **Normalising Flows** using **Conditional Density Estimation**"
+  - "**Normalising Flows** for **Conditional Density Estimation**"
 logoleft_name: "figures/TAIAO_logo_1000x320_upscaled.png"
 logoright_name: https&#58;//raw.githubusercontent.com/brentthorne/posterdown/master/images/betterhexlogo.png
 logocenter_name: "figures/SVGFullColourHorizontalRGBforredbackground_upscaled.png"
@@ -64,14 +64,6 @@ knitr::opts_knit$set(root.dir = 'G:\\My Drive\\PhD\\posters\\')
 ```
 
 <br>
-
-## Introduction 
-
-The World Health Organisation estimates 150,000 people die from climate change already, with much of this concentrated in Southern and Sub-Sarahan Africa. Projections include ~250,000 deaths p/y between 2030-50 and $2-4B of direct damage to health p/y by 2030 [@world2014quantitative]. This is considered conservative by some and estimates vary considerably [@parncutt2019human].
-
-Statistical models in environmental science rely on assumptions such as gaussianity of model residuals or linear spatio-temporal relationships. This reliance presents risk in terms of the robustness and accuracy of estimation tasks in environmental modeling, which decision makers rely on. 
-
-Hence, there is a need to develop and transfer technology that better reflects the nature of uncertainty of estimation in environmental problems and can handle the complexity of the systems modeled. This poster explains how[^1] conditional density estimation with normalising flows can help meet this need.
 
 ## Conditional Density Estimation
 
@@ -120,8 +112,6 @@ p2 <- ggplot(data = faithful) +
 
 grid.arrange(p1, p2, nrow = 1)
 ```
-
-CDE has been used in finance [@rothfuss2019conditional], astropysics [@rojas2005conditional], environmental science [@carney2005predicting], neurodynamics [@gonccalves2020training], genetics [@wang2015conditional] and sociology [@trippe2018conditional]. 
 
 ## Normalising Flows
 
@@ -213,7 +203,7 @@ NFs models used in practice include autoregressive models (MAFs, IAFs, NAFs) and
 
 ## Using NFs for CDE
 
-This intersection is a natural extension of progress in the area CDE and NFs. Existing work includes CDE with Bayesian NFs [@trippe2018conditional] and CDE using MAFs [@papamakarios2017masked] but progress has been limited by the following factors:
+Existing work includes CDE with Bayesian NFs [@trippe2018conditional] and CDE using MAFs [@papamakarios2017masked] but progress has been limited by the following factors:
 
 * Computational difficulty of scaling NFs to large data sets. For example, the latest continuous normalising flows models are restricted to usage on comparatively small image benchmark sets [@grathwohl2018ffjord].
 * Few practical applications of CDE in mainstream environmental science.
