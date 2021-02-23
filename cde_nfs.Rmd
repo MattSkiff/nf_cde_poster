@@ -76,10 +76,12 @@ knitr::include_graphics('figures\\qr.png')
 
 <!-- equation goes here -->
 
-Conditional density estimation is a *task* for which there are methods in statistics, machine learning and deep learning. It is a generalisation of conditional mean estimation often performed with MLR. In CDE, instead of predicting a point estimate $\hat{y}$ and generated a confidence or credible interval $\hat{y}\pm CI$, we instead predict the full conditional density $p(y|x)$ of the data for a given query point $x$, representing an improved form of **uncertainty quantification**. Figure \@ref(fig:cde) demonstrates kernel CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the old faithful greyser dataset via the `hdrcde` R package. Early CDE methods included KCDE and discretisation of the target variable via class probability estimators [@frank2009conditional] (Figure \@ref(fig:qr)). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde], Mixture Density Networks [@carney2005predicting] and GMMs [@gilardi2002conditional]. 
+Conditional density estimation is a form of supervised learning for which there are methods in statistics, machine learning and deep learning. It is a generalisation of regression. In CDE, instead of predicting a point estimate $\hat{y}$ and generated a confidence or credible interval $\hat{y}\pm CI$, the task is to predict the full conditional density $p(y|x)$ of the data for a given query point $x$, representing an improved form of **uncertainty quantification**. 
+
+Figure \@ref(fig:cde) demonstrates kernel CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the old faithful greyser dataset via the `hdrcde` R package, showing an improvement in how informative uncertainty estimates are using CDE instead of prediction intervals. Early CDE methods included KCDE and discretisation of the target variable via class probability estimators [@frank2009conditional] (Figure \@ref(fig:qr)). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde], Mixture Density Networks [@carney2005predicting] and GMMs [@gilardi2002conditional]. 
 
 
-```{r cde, echo=FALSE, fig.cap="\\label{fig:cde}Demonstration of estimation using KCDE", fig.height=4, message=FALSE, warning=FALSE, out.width="100%"}
+```{r cde, echo=FALSE, fig.cap="\\label{fig:cde}Demonstration of estimation using KCDE vs SLR & PIs", fig.height=11, message=FALSE, warning=FALSE, out.width="90%"}
 library(hdrcde)
 library(ggplot2)
 library(gridExtra)
@@ -92,43 +94,63 @@ faithful2.cde <- cde(x = faithful$waiting, y = faithful$eruptions,
                     x.name="Waiting time", y.name = "Duration time",
                     x.margin = 50)
 
+faithful3.cde <- cde(x = faithful$waiting, y = faithful$eruptions,
+                    x.name="Waiting time", y.name = "Duration time",
+                    x.margin = 65)
+
 cde_df <- data.frame(y = faithful.cde$y,
                      z = as.vector(faithful.cde$z),
-                     z2 = as.vector(faithful2.cde$z))
+                     z2 = as.vector(faithful2.cde$z),
+                     z3 = as.vector(faithful3.cde$z))
 
 p1 <- ggplot(data = cde_df) +
   geom_line(mapping = aes(x = y,y = z),color = 'red') +
   geom_line(mapping = aes(x = y,y = z2),color = 'blue') +
+  geom_line(mapping = aes(x = y,y = z3),color = 'purple') +
   theme_light() +
-  labs(title = "Conditional Density Estimates (2)\n of Eruption Duration",
+  labs(title = "Conditional Density Estimates (2) of Eruption Duration",
        x = "target",y = "density")
 
 p2 <- ggplot(data = faithful) +
   geom_point(mapping = aes(x = waiting,y = eruptions)) +
   geom_vline(xintercept = 80,color = 'red') + 
   geom_vline(xintercept = 50,color = 'blue') + 
+  geom_vline(xintercept = 65,color = 'purple') + 
   theme_light() +
-  labs(title = "Scatterplot of Old Faithful Data\n and CDE query points")
+  labs(title = "Scatterplot of Old Faithful Data and CDE query points")
 
-grid.arrange(p1, p2, nrow = 1)
+
+faithful.lm <- lm(eruptions~waiting,data = faithful)
+preds <- as.data.frame(predict(faithful.lm, newdata=data.frame(waiting=c(80,50,65)), interval="prediction",
+                         level = 0.95))
+preds$target <- c(80,50,65)
+
+p3 <- ggplot(data = faithful) +
+  geom_point(mapping = aes(x = waiting,y = eruptions)) +
+  geom_abline(slope = coef(faithful.lm)[[2]],intercept =  coef(faithful.lm)[[1]],color = 'grey',size = 1) +
+  geom_errorbar(data=preds[1,], aes(x = target,ymin = lwr, ymax = upr), fill = "blue", size = 1,color = 'red') +
+  geom_errorbar(data=preds[2,], aes(x = target,ymin = lwr, ymax = upr), fill = "blue", size = 1,color = 'blue') +
+  geom_errorbar(data=preds[3,], aes(x = target,ymin = lwr, ymax = upr), fill = "purple", size = 1,color = 'purple') +
+  theme_light() +
+  labs(title = "Scatterplot of Old Faithful Data and SLR",subtitle = "95% prediction interval for query points")
+
+
+grid.arrange(p1, p2, p3, nrow = 3,ncol = 1)
 ```
 
 ## Normalising Flows
 
 <!-- key NF equation -->
 
-Normalising flows are a *class of models* [@kobyzev2020normalizing] that use a sequence of invertible, differentiable, transformations (bijections) applied to a base probability distribution (typically a simple gaussian) in order to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). 
+Normalising flows are a *class of models* [@kobyzev2020normalizing] that are sequences of invertible, differentiable, transformations (bijections) upon a base probability distribution (typically a simple gaussian) to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). NFs came to prominence for their relative efficiency in both generative sampling and density evaluation (the normalising direction). In generative modeling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not efficient for density evaluation.
 
 > *By the term normalising flows people mean bijections which are convenient to compute, invert, and calculate the determinant of their Jacobian*.
 
 >  `r tufte::quote_footer('--- Kobyzev et al, "Normalizing Flows: An Introduction and Review of Current Methods" (2020)')`
 
-The number of layers influences the expressiveness of the trained distribution, as does the class of NF (figure \@ref(fig:nfs)). NFs came to prominence for their relative efficiency in both generative sampling and density evaluation. In terms of generative modeling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not generally efficient in terms of density evaluation. 
-
 ```{r nfs, echo=FALSE, fig.cap="\\label{fig:nfs}Expressiveness of NFs varies by class of model", fig.height=8, message=FALSE, warning=FALSE, out.width="100%",cache=TRUE}
 # Simple Flow visualisation
 
-library(ggplot2)
 library(MASS)
 library(gridExtra)
 library(lattice)
@@ -161,6 +183,10 @@ A_tri[row(A_tri)+col(A_tri) >=n+1] <- (row(A_tri)+col(A_tri) -n+1)[row(A_tri)+co
 # random triangular matrix - exp dist
 A_tri_exp <- upper.tri(matrix(rexp(n*n, rate=.1), ncol=n))
 
+# random triangular matrix - unif dist\
+A_tri_unif <- upper.tri(matrix(runif(n*n,0,3), ncol=n))
+
+
 linear_transform <- function(x,A,b) {
   return(A %*% x + b)
 }
@@ -172,18 +198,21 @@ mvn_linear_transform_A_diag.df <- as.data.frame(mvn_linear_transform_A_diag.mat)
 mvn_linear_transform_A_tri_exp.mat <- linear_transform(x = mvn.mat,A = A_tri_exp,b = b_diag)
 mvn_linear_transform_A_tri_exp.df <- as.data.frame(mvn_linear_transform_A_tri_exp.mat)
 
+mvn_linear_transform_A_tri_unif.mat <- linear_transform(x = mvn.mat,A = A_tri_exp,b = b_diag)
+mvn_linear_transform_A_tri_unif.df <- as.data.frame(mvn_linear_transform_A_tri_unif.mat)
+
 p2 <- ggplot(mvn_linear_transform_A_diag.df) +
         geom_point(mapping = aes(x = V1,y = V2),alpha = 0.1) +
         theme_light() +
-        labs(x = "x",y = "y",title = "Linear transform on sample",caption = "n = 1k",subtitle = "Diagonal matrix for transformation matrix (A)") +
+        labs(x = "x",y = "y",title = expression(A[1]~Linear~transform~on~sample),caption = "n = 1k",subtitle = "Diagonal transformation matrix") +
         scale_x_continuous(expand = c(0, 0)) +
         scale_y_continuous(expand = c(0, 0))  + 
         theme(legend.position = "none")
 
-p3 <- ggplot(mvn_linear_transform_A_tri_exp.df) +
+p3 <- ggplot(mvn_linear_transform_A_tri_unif.df) +
   geom_point(mapping = aes(x = V1,y = V2),alpha = 0.1) +
   theme_light() +
-  labs(x = "x",y = "y",title = "Linear transform on sample",caption = "n = 1k",subtitle = "Using triangular matrix for A (sampled from exp. dist.)") +
+  labs(x = "x",y = "y",title = expression(A[2]~Linear~transform~on~sample),caption = "n = 1k",subtitle = "Triangular transformation matrix") +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0))  + 
   theme(legend.position = "none")
@@ -193,15 +222,17 @@ t <- textGrob(plot_explanation)
 final <- grid.arrange(p1,p2,p3,t,nrow = 2)
 ```
 
-Normalising flows are trained by minimising the KL-divergence via standard optimisation techniques, like SGD. There are three properties of concern when designing NFs:
+Normalising flows are trained by maximising the log-likelihood, or minimising KL-divergence when variational inference is used. There are three properties of concern when designing NFs [@kobyzev2020normalizing]:
 
 * Efficiency
 * Expressiveness
 * Invertibility 
 
-NFs models used in practice include autoregressive models (MAFs, IAFs, NAFs) and NFs that use a variety of coupling functions (NICE, RealNVP, Neural Spline Flows, GLOW), while recent developments include continuous NFs using neural ODEs (FFJORD) and research on manifold learning [@kobyzev2020normalizing].
+The number of layers influences the expressiveness of the trained distribution, as does the class of NF. Figure \@ref(fig:nfs) shows a sample from a MVN: $\mathbf{x} \sim \mathcal{N}(\mathcal{u},\Sigma)$ transformed using two simple linear ($g(x) = \mathbf{A}\mathbf{x} + b$) flows , where $A_1 := diag(v), A_2 := tri(v), v\sim U(0,3)$. For $A_1$ and $A_2$, positive entries on the diagonal ensure invertibility.
 
-## Using NFs for CDE
+Practical NFs models often use **coupling** functions (NICE, RealNVP, Neural Spline Flows, Glow). Coupling functions split the input into disjoint partions, applying an arbitrarily complex conditioning function (e.g. an invertible NN) to one partition. Other models use coupling functions where the conditioner is **autoregressive** (MAFs, IAFs, NAFs). Recent developments include continuous NFs using neural ODEs (FFJORD) and research on manifold learning [@kobyzev2020normalizing].
+
+## NFs for CDE
 
 Existing work includes CDE with Bayesian NFs [@trippe2018conditional] and CDE using MAFs [@papamakarios2017masked] but progress has been limited by the following factors:
 
