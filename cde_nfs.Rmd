@@ -117,7 +117,7 @@ p2 <- ggplot(data = faithful) +
   geom_vline(xintercept = 50,color = 'blue') + 
   geom_vline(xintercept = 65,color = 'purple') + 
   theme_light() +
-  labs(title = "Scatterplot of Old Faithful Data and CDE query points")
+  labs(title = "Scatterplot of Old Faithful Data and query points")
 
 
 faithful.lm <- lm(eruptions~waiting,data = faithful)
@@ -132,7 +132,7 @@ p3 <- ggplot(data = faithful) +
   geom_errorbar(data=preds[2,], aes(x = target,ymin = lwr, ymax = upr), fill = "blue", size = 1,color = 'blue') +
   geom_errorbar(data=preds[3,], aes(x = target,ymin = lwr, ymax = upr), fill = "purple", size = 1,color = 'purple') +
   theme_light() +
-  labs(title = "Scatterplot of Old Faithful Data and SLR",subtitle = "95% prediction interval for query points")
+  labs(title = "95% prediction interval for query points")
 
 
 grid.arrange(p1, p2, p3, nrow = 3,ncol = 1)
@@ -142,7 +142,7 @@ grid.arrange(p1, p2, p3, nrow = 3,ncol = 1)
 
 <!-- key NF equation -->
 
-Normalising flows are a *class of models* [@kobyzev2020normalizing] that are sequences of invertible, differentiable, transformations (bijections) upon a base probability distribution (typically a simple gaussian) to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous). NFs came to prominence for their relative efficiency in both generative sampling and density evaluation (the normalising direction). In generative modeling, NFs fit alongside VAEs and GANs. However, VAEs and GANs are not efficient for density evaluation.
+Normalising flows are a sequences of invertible, differentiable, transformations (bijections) upon a base probability distribution (typically a simple gaussian) to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous) [@kobyzev2020normalizing]. NFs were initially proposed as a density estimation procedure, then for use as approximate posteriors in variational inference. They came to prominence for their efficiency and expressiveness in both sampling (generative direction) and density evaluation (normalising direction). NFs fit alongside VAEs and GANs for generative modelling, however, VAEs and GANs are not efficient for density evaluation.
 
 > *By the term normalising flows people mean bijections which are convenient to compute, invert, and calculate the determinant of their Jacobian*.
 
@@ -222,21 +222,21 @@ t <- textGrob(plot_explanation)
 final <- grid.arrange(p1,p2,p3,t,nrow = 2)
 ```
 
-Normalising flows are trained by maximising the log-likelihood, or minimising KL-divergence when variational inference is used. There are three properties of concern when designing NFs [@kobyzev2020normalizing]:
+Normalising flows are trained by maximising the log-likelihood via SGD, or minimising KL-divergence when variational inference is used. Three properties are important for NFs [@kobyzev2020normalizing]:
 
-* Efficiency
+* Efficiency 
 * Expressiveness
 * Invertibility 
 
 The number of layers influences the expressiveness of the trained distribution, as does the class of NF. Figure \@ref(fig:nfs) shows a sample from a MVN: $\mathbf{x} \sim \mathcal{N}(\mathcal{u},\Sigma)$ transformed using two simple linear ($g(x) = \mathbf{A}\mathbf{x} + b$) flows , where $A_1 := diag(v), A_2 := tri(v), v\sim U(0,3)$. For $A_1$ and $A_2$, positive entries on the diagonal ensure invertibility.
 
-Practical NFs models often use **coupling** functions (NICE, RealNVP, Neural Spline Flows, Glow). Coupling functions split the input into disjoint partions, applying an arbitrarily complex conditioning function (e.g. an invertible NN) to one partition. Other models use coupling functions where the conditioner is **autoregressive** (MAFs, IAFs, NAFs). Recent developments include continuous NFs using neural ODEs (FFJORD) and research on manifold learning [@kobyzev2020normalizing].
+Practical NF models often use **coupling** functions (NICE, RealNVP, Neural Spline Flows, Glow). Coupling functions split the input into disjoint partions, applying an arbitrarily complex conditioning function (e.g. an invertible NN) to one partition. Other models use coupling functions where the conditioner is **autoregressive** (MAFs, IAFs, NAFs). Recent developments include continuous NFs using neural ODEs (FFJORD) and research on manifold learning [@kobyzev2020normalizing].
 
 ## NFs for CDE
 
-Existing work includes CDE with Bayesian NFs [@trippe2018conditional] and CDE using MAFs [@papamakarios2017masked] but progress has been limited by the following factors:
+There is research in using normalising flows for conditional class probability estimation, conditional image generation and multivariate time series prediction. Direct work on CDE with NFs is limited. This includes using Bayesian NFs [@trippe2018conditional]. CDE using MAFs was proposed in 2017 [@papamakarios2017masked] and explored further in 2019 [rothfuss2019noise], but progress has been limited by the following factors:
 
-* Computational difficulty of scaling NFs to large data sets. For example, the latest continuous normalising flows models are restricted to usage on comparatively small image benchmark sets [@grathwohl2018ffjord].
+* Computational difficulty of scaling NFs to large data sets. For example, the latest continuous NF models are restricted to usage on comparatively small image benchmark sets [@grathwohl2018ffjord].
 * Few practical applications of CDE in mainstream environmental science.
 * DL focus is often in areas of traditional strength for the field, such as image data. 
 
