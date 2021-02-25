@@ -13,7 +13,7 @@ main_textsize: "130px"
 author_textsize: "1.11em"
 body_textsize: "35px"
 author:
-  - name: "Matthew Skiffington"
+  - name: "Matthew Skiffington[^1]"
     main: true
     twitter: mattskiff_ 
     email: mks29@students.waikato.ac.nz
@@ -76,7 +76,7 @@ knitr::include_graphics('figures\\qr.png')
 
 <!-- equation goes here -->
 
-Conditional density estimation is a form of supervised learning for which there are methods in statistics, machine learning and deep learning. It is a generalisation of regression. In CDE, instead of predicting a point estimate $\hat{y}$ and generated a confidence or credible interval $\hat{y}\pm CI$, the task is to predict the full conditional density $p(y|x)$ of the data for a given query point $x$, representing an improved form of **uncertainty quantification**. 
+Conditional density estimation is a form of supervised learning that has methods in statistics, machine learning and deep learning. It is a generalisation of regression. In CDE, instead of predicting a point estimate $\hat{y}$ and generated a confidence or credible interval $\hat{y}\pm CI$, the task is to predict the full conditional density $p(y|x)$ of the data for a given query point $x$, an improved form of **uncertainty quantification**. 
 
 Figure \@ref(fig:cde) demonstrates kernel CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the old faithful greyser dataset via the `hdrcde` R package, showing an improvement in how informative uncertainty estimates are using CDE instead of prediction intervals. Early CDE methods included KCDE and discretisation of the target variable via class probability estimators [@frank2009conditional] (Figure \@ref(fig:qr)). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde], Mixture Density Networks [@carney2005predicting] and GMMs [@gilardi2002conditional]. 
 
@@ -142,13 +142,13 @@ grid.arrange(p1, p2, p3, nrow = 3,ncol = 1)
 
 <!-- key NF equation -->
 
-Normalising flows are a sequences of invertible, differentiable, transformations (bijections) upon a base probability distribution (typically a simple gaussian) to approximate the true data density, which may be skewed, multi-modal or complex (even discontinuous) [@kobyzev2020normalizing]. NFs were initially proposed as a density estimation procedure, then for use as approximate posteriors in variational inference. They came to prominence for their efficiency and expressiveness in both sampling (generative direction) and density evaluation (normalising direction). NFs fit alongside VAEs and GANs for generative modelling, however, VAEs and GANs are not efficient for density evaluation.
+Normalising flows are sequences of invertible, differentiable, transformations (bijections) upon a base probability distribution (e.g. a simple gaussian) to approximate the true density, which may be skewed, multi-modal or complex (even discontinuous) [@kobyzev2020normalizing]. NFs were proposed as a density estimation procedure, then for use as approximate posteriors in variational inference. They came to prominence for efficiency and expressiveness in both sampling (generative direction) and density evaluation (normalising direction). NFs fit alongside VAEs and GANs as recent DL generative models, however, VAEs and GANs are not efficient for density evaluation. 
 
 > *By the term normalising flows people mean bijections which are convenient to compute, invert, and calculate the determinant of their Jacobian*.
 
 >  `r tufte::quote_footer('--- Kobyzev et al, "Normalizing Flows: An Introduction and Review of Current Methods" (2020)')`
 
-```{r nfs, echo=FALSE, fig.cap="\\label{fig:nfs}Expressiveness of NFs varies by class of model", fig.height=8, message=FALSE, warning=FALSE, out.width="100%",cache=TRUE}
+```{r nfs, echo=FALSE, fig.cap="\\label{fig:nfs}Expressiveness varies by choice of flow", fig.height=8, message=FALSE, warning=FALSE, out.width="100%",cache=TRUE}
 # Simple Flow visualisation
 
 library(MASS)
@@ -228,17 +228,18 @@ Normalising flows are trained by maximising the log-likelihood via SGD, or minim
 * Expressiveness
 * Invertibility 
 
-The number of layers influences the expressiveness of the trained distribution, as does the class of NF. Figure \@ref(fig:nfs) shows a sample from a MVN: $\mathbf{x} \sim \mathcal{N}(\mathcal{u},\Sigma)$ transformed using two simple linear ($g(x) = \mathbf{A}\mathbf{x} + b$) flows , where $A_1 := diag(v), A_2 := tri(v), v\sim U(0,3)$. For $A_1$ and $A_2$, positive entries on the diagonal ensure invertibility.
+\usepackage{ dsfont }
 
-Practical NF models often use **coupling** functions (NICE, RealNVP, Neural Spline Flows, Glow). Coupling functions split the input into disjoint partions, applying an arbitrarily complex conditioning function (e.g. an invertible NN) to one partition. Other models use coupling functions where the conditioner is **autoregressive** (MAFs, IAFs, NAFs). Recent developments include continuous NFs using neural ODEs (FFJORD) and research on manifold learning [@kobyzev2020normalizing].
+The number of layers influences the expressiveness of the trained distribution, as does the class of NF. Figure \@ref(fig:nfs) shows a sample from a MVN: $\mathbf{x} \sim \mathcal{N}(\mathcal{u},\Sigma)$ transformed using two simple linear ($g(x) = \mathbf{A}\mathbf{x} + b$) flows , where $A_1 := diag(v), A_2 := tri(v), v\sim U(0,3)$ and $b \sim U(-3,3), \mathbf{x} \in \mathcal{R^2}$. For $A_1$ and $A_2$, positive entries on the diagonal ensure invertibility.
+
+Practical NF models often use **coupling** functions (NICE, RealNVP, Neural Spline Flows, Glow). Coupling functions split the input into disjoint partions, applying an arbitrarily complex conditioning function (e.g. an invertible NN) to one partition. Other models use coupling functions where the conditioner is **autoregressive** (MAFs, IAFs, NAFs). Recent developments include continuous NFs using neural ODEs (e.g. FFJORD) and research on manifold learning [@kobyzev2020normalizing].
 
 ## NFs for CDE
 
-There is research in using normalising flows for conditional class probability estimation, conditional image generation and multivariate time series prediction. Direct work on CDE with NFs is limited. This includes using Bayesian NFs [@trippe2018conditional]. CDE using MAFs was proposed in 2017 [@papamakarios2017masked] and explored further in 2019 [rothfuss2019noise], but progress has been limited by the following factors:
+Normalising flows have been applied to conditional class probability estimation, conditional image generation and multivariate time series prediction. Work directly on CDE with NFs is limited. This includes Bayesian NFs, which have a framework for placing priors over CDE estimators using BNNs with variational inference [@trippe2018conditional]. CDE using MAFs and Real NVP by conditioning each term in the chain rule of probability with the inclusion of $y$ at every layer was proposed in 2017 [@papamakarios2017masked]. This was explored further while introducing noise regularisation for CDE in 2019 [@rothfuss2019noise]. Conditional NFs for structured prediction tasks have also been developed [@winkler2019learning]. Progress in using NFs for CDE has been limited by the following factors:
 
-* Computational difficulty of scaling NFs to large data sets. For example, the latest continuous NF models are restricted to usage on comparatively small image benchmark sets [@grathwohl2018ffjord].
-* Few practical applications of CDE in mainstream environmental science.
-* DL focus is often in areas of traditional strength for the field, such as image data. 
+* Computational difficulty of scaling NFs to large data sets. For example, the newer continuous NF models are restricted to usage on small image benchmark sets [@grathwohl2018ffjord].
+* DL focus is often in areas of traditional strength, e.g. image data. 
 
 ## References
 
