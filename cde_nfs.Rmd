@@ -11,7 +11,7 @@ poster_width: "23.4in"
 main_fontfamily: "Helvetica"
 main_textsize: "130px"
 author_textsize: "1.11em"
-body_textsize: "35px"
+body_textsize: "30px"
 author:
   - name: "Matthew Skiffington[^1]"
     main: true
@@ -222,7 +222,7 @@ t <- textGrob(plot_explanation)
 final <- grid.arrange(p1,p2,p3,t,nrow = 2)
 ```
 
-Normalising flows are trained by maximising the log-likelihood via SGD, or minimising KL-divergence when variational inference is used. Three properties are important for NFs [@kobyzev2020normalizing]:
+Normalising flows are trained by maximising log-likelihood via SGD, or minimising KL-divergence when variational inference is used. Three properties are important for NFs [@kobyzev2020normalizing]:
 
 * Efficiency 
 * Expressiveness
@@ -240,6 +240,13 @@ Normalising flows have been applied to conditional class probability estimation,
 
 * Computational difficulty of scaling NFs to large data sets. For example, the newer continuous NF models are restricted to usage on small image benchmark sets [@grathwohl2018ffjord].
 * DL focus is often in areas of traditional strength, e.g. image data. 
+
+Below is a 2D example of using NFs to create CDEs of rainfall and soil moisture (data from NIWA, over 10 months). We scale the data, train the flow, and condition on two levels of rainfall (-1,1) to show the conditional densities of soil moisture. Note that the separate estimates have different modality, which could reflect a differing seasonal effect. Other climatological variables, such as radiance, air temperature, wind and spatio-temporal factors would all be other sources of variation not considered here. In this case, the marginals are simulated well, but the joint is less well approximated.
+
+```{r nf_cde_diag,out.extra='style="float:right; padding:10px"',fig.cap="\\label{fig:nf_cde}Traing NFs for CDE with climatological data",out.width="100%",echo=FALSE}
+# All defaults
+knitr::include_graphics('figures\\poster_nf_cde_diag.jpg')
+```
 
 ## References
 

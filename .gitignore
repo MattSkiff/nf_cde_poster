@@ -1,6 +1,7 @@
 *.html
 *.RData
 *.Rhistory
+*.csv
 figures/
 cde_nfs_cache/
 cde_nfs_files/
