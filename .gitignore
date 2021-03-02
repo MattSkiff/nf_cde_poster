@@ -2,6 +2,7 @@
 *.RData
 *.Rhistory
 *.csv
+*.pdf
 figures/
 cde_nfs_cache/
 cde_nfs_files/
