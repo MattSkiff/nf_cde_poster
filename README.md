@@ -1,6 +1,6 @@
-# A poster on conditional density estimation with Normalising Flows
+# Conditional Density Estimation with Normalising Flows (poster)
 
-For the AINZ conference to be held in Matamata (Hobbiton), 2021.
+For the AINZ conference to be held in Matamata (Hobbiton), New Zealand, 2021.
 
 ---
 
