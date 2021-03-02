@@ -3,6 +3,7 @@
 *.Rhistory
 *.csv
 *.pdf
+*.exe
 figures/
 cde_nfs_cache/
 cde_nfs_files/
