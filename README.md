@@ -1,6 +1,6 @@
-# A poster on conditional density estimation with Normalising Flows
+# Conditional Density Estimation with Normalising Flows (poster)
 
-For the AINZ conference to be held in Matamata (Hobbiton), 2021.
+For the AINZ conference to be held in Matamata (Hobbiton), New Zealand, 2021.
 
 ---
 
@@ -8,7 +8,7 @@ Made using the excellent posterdown R package and the 'posterdown_betterport' te
 
 https://github.com/brentthorne/posterdown
 
-Heavy used the NF Pyro tutorial:
+Heavily used the NF Pyro tutorial:
 
 https://pyro.ai/examples/normalizing_flows_i.html
 
