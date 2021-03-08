@@ -266,3 +266,5 @@ The probabilistic programming libraries `pyro` (for `PyTorch`) and `tensorflow p
 ## References
 
 [^1]:  Poster produced via the *posterdown* package. The code to reproduce this poster is at **https://github.com/MattSkiff/nf_cde_poster**.
+
+<!-- rmarkdown::render(input = "cde_nfs.Rmd",output_file = "index.html") -->
