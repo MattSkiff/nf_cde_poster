@@ -263,7 +263,7 @@ Figure \@ref(fig:nfcdeex) demonstrates using NFs to create CDEs of rainfall & so
 <hr style="height:10pt; visibility:hidden;" />
 
 ```{r nfcdeex,out.extra='style="float:right; padding:10px"',fig.cap="\\label{fig:nfcdeex}Traing NFs for CDE with climatological data",out.width="100%",echo=FALSE}
-knitr::include_graphics('figures\\combined.png')
+knitr::include_graphics('figures/combined.png')
 ```
 
 The probabilistic programming libraries `pyro` (for `PyTorch`) and `tensorflow probability` both implement NFs.
