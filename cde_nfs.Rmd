@@ -9,9 +9,11 @@ accent_colour: "#cc0000"
 poster_height: "23.375in"
 poster_width: "16.5in"
 main_fontfamily: "Helvetica"
-main_textsize: "130px"
-author_textsize: "1.11em"
-body_textsize: "28.5px"
+main_textsize: "90px"
+author_textsize: "2em"
+body_textsize: "17px"
+reference_textsize: "13px"
+caption_textsize: "19px"
 author:
   - name: "Matthew Skiffington[^1]"
     main: true
@@ -35,6 +37,7 @@ link-citations: true
 csl: ieee.csl
 ---
 
+<!-- template: https://github.com/brentthorne/posterdown/blob/master/inst/rmarkdown/templates/posterdown_betterport/resources/template.html {edits below} -->
 <!-- logo sizing -->
 <style>
 .main p {
@@ -45,6 +48,15 @@ margin-left: 0em;
  height: 72.5%;
  bottom: 0.4in;
 }
+
+a.email {
+font-size: 20px;
+}
+
+.twitter, i {
+font-size: 20px;
+}
+
 #code {
  font-size: 30px;
 }
@@ -53,17 +65,17 @@ margin-left: 0em;
  height: 71.5%;
 }
 #main-img-right {
- bottom: 0.4in;
+ bottom: 0.2in;
 }
 .footnotes {
-  font-size: 16pt;
+  font-size: 10pt;
 }
 
 </style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = 'G:\\My Drive\\PhD\\dev_working_folder\\clones\\nf_cde_poster\\')
+knitr::opts_knit$set(root.dir = 'G:\\My Drive\\dev_working_folder\\clones\\nf_cde_poster\\')
 
 # base text size for plots
 bs <- 16
@@ -88,7 +100,7 @@ qrcode_gen(dataString="https://media0.giphy.com/media/RU1ruEDCrrH3uEEBOK/giphy.g
 
 Conditional density estimation (CDE) is a form of supervised learning with methods in statistics, machine learning and deep learning. It is a generalisation of regression. Instead of predicting a point estimate $\hat{y}$ and generating a confidence or credible interval $\hat{y}\pm CI$, the task is to predict the full conditional density $p(y|x)$ of the data for a given query point $x$, an improved form of **uncertainty quantification**. 
 
-Figure \@ref(fig:cde) shows Kernel-CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the faithful geyser data via the `hdrcde` R package, demonstrating an improvement in uncertainty quantification by using CDE instead of intervals. Early CDE methods included Kernel-CDE, Mixture Density Networks [@carney2005predicting] and discretisation of the target variable via class probability estimators [@frank2009conditional] (Figure \@ref(fig:qr)). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde] and Bottleneck Conditional Density Estimation, a variation on Conditional-VAEs [@shu2017bottleneck]. 
+Figure \@ref(fig:cde) shows Kernel-CDE [@bashtannyk2001bandwidth] [@rosenblatt1969conditional] using the faithful geyser data via the **hdrcde** R package, demonstrating an improvement in uncertainty quantification by using CDE instead of intervals. Early CDE methods included Kernel-CDE, Mixture Density Networks [@carney2005predicting] and discretisation of the target variable via class probability estimators [@frank2009conditional] (Figure \@ref(fig:qr)). Modern methods for CDE include Random Forest-CDE [@pospisil2018rfcde] and Bottleneck Conditional Density Estimation, a variation on Conditional-VAEs [@shu2017bottleneck]. 
 
 
 ```{r cde, echo=FALSE, fig.cap="\\label{fig:cde}Demonstration of estimation using KCDE vs Simple Linear Regression & Prediction Intervals", fig.height=12, message=FALSE, warning=FALSE, out.width="100%",cache=TRUE}
@@ -167,6 +179,7 @@ library(MASS)
 library(gridExtra)
 library(lattice)
 library(grid)
+library(ggplot2)
 
 n <- 10000
 
@@ -258,17 +271,17 @@ Normalising flows find applications in conditional class probability estimation,
 * Computational difficulty of scaling NFs to large data sets - newer continuous NF models are restricted to usage on small image benchmark sets [@grathwohl2018ffjord].
 * Deep learning focus is often in areas of traditional strength, e.g. image data. 
 
-Figure \@ref(fig:nfcdeex) demonstrates using NFs to create CDEs of rainfall & soil moisture over 10 3 month time steps (data source: NIWA, VCSN[@tait2006thin]). We scale the data, train the flow, and condition on two levels of rainfall $[-1,1]$, showing the conditional densities. Note the separate estimates have different modalities, which could reflect a seasonal effect. Other climatological and spatio-temporal factors would be extra sources of variation are not considered. The marginals are simulated well while the joint is poorly approximated (and noisy).
+Figure \@ref(fig:nfcdeex) demonstrates using NFs to create CDEs of rainfall & soil moisture over 10 3 month time steps (data source: NIWA - VCSN [@tait2006thin]). We scale the data, train the flow, and condition on two levels of rainfall $[-1,1]$, showing the conditional densities. Note the separate estimates have different modalities, which could reflect a seasonal effect. Other climatological and spatio-temporal factors would be extra sources of variation are not considered. The marginals are simulated well while the joint is poorly approximated (and noisy).
 
-<hr style="height:10pt; visibility:hidden;" />
+The probabilistic programming libraries **Pyro** (for **PyTorch**) and **TensorFlow Probability** both implement NFs.
+
+<hr style="height:30pt; visibility:hidden;" />
 
 ```{r nfcdeex,out.extra='style="float:right; padding:10px"',fig.cap="\\label{fig:nfcdeex}Traing NFs for CDE with climatological data",out.width="100%",echo=FALSE}
 knitr::include_graphics('figures/combined.png')
 ```
 
-The probabilistic programming libraries `pyro` (for `PyTorch`) and `tensorflow probability` both implement NFs.
-
-## References
+# References
 
 [^1]:  Poster produced via the *posterdown* package. The code to reproduce this poster is at **https://github.com/MattSkiff/nf_cde_poster**.
 
