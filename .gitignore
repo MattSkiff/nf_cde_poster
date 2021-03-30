@@ -3,6 +3,9 @@
 *.csv
 *.pdf
 *.exe
+*.html
+*.pdf
 *figures/proto_nf_cde/
+index_files/
 cde_nfs_cache/
 cde_nfs_files/

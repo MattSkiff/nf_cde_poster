@@ -6,8 +6,8 @@ title: " "
 primary_colour: "#1a1818" 
 secondary_colour: "#9e8a8a"
 accent_colour: "#cc0000"
-poster_height: "36in"
-poster_width: "23.4in"
+poster_height: "23.375in"
+poster_width: "16.5in"
 main_fontfamily: "Helvetica"
 main_textsize: "130px"
 author_textsize: "1.11em"
@@ -63,7 +63,7 @@ margin-left: 0em;
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = 'G:\\My Drive\\PhD\\posters\\')
+knitr::opts_knit$set(root.dir = 'G:\\My Drive\\PhD\\dev_working_folder\\clones\\nf_cde_poster\\')
 
 # base text size for plots
 bs <- 16
@@ -258,7 +258,7 @@ Normalising flows find applications in conditional class probability estimation,
 * Computational difficulty of scaling NFs to large data sets - newer continuous NF models are restricted to usage on small image benchmark sets [@grathwohl2018ffjord].
 * Deep learning focus is often in areas of traditional strength, e.g. image data. 
 
-Figure \@ref(fig:nfcdeex) demonstrates using NFs to create CDEs of rainfall & soil moisture (data source: NIWA, 10 months). We scale the data, train the flow, and condition on two levels of rainfall $[-1,1]$, showing the conditional densities. Note the separate estimates have different modalities, which could reflect a differing seasonal effect. Other climatological and spatio-temporal factors would be extra sources of variation not considered. The marginals are simulated well while the joint is poorly approximated (and noisy).
+Figure \@ref(fig:nfcdeex) demonstrates using NFs to create CDEs of rainfall & soil moisture over 10 3 month time steps (data source: NIWA, VCSN[@tait2006thin]). We scale the data, train the flow, and condition on two levels of rainfall $[-1,1]$, showing the conditional densities. Note the separate estimates have different modalities, which could reflect a seasonal effect. Other climatological and spatio-temporal factors would be extra sources of variation are not considered. The marginals are simulated well while the joint is poorly approximated (and noisy).
 
 <hr style="height:10pt; visibility:hidden;" />
 
