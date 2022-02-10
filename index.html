@@ -8,9 +8,8 @@
 
 
 
-<title>cde_nfs.utf8</title>
+<title>cde_nfs.knit</title>
 
-<script src="index_files/header-attrs-2.6/header-attrs.js"></script>
 
 
 
@@ -115,7 +114,7 @@ font-style: italic;
 padding-top: 0;
 }
 .references {
-font-size: 13px;
+font-size: 11px;
 line-height: 90%;
 }
 /* Create three unequal columns that floats next to each other */
@@ -125,7 +124,7 @@ padding: 0px;
 }
 .outer {
 width: 16.5in;
-height: calc(23.375in *  (1 - 0.10 - 0.10 - 0.01) );
+height: calc(23.375in *  (1 - 0.1 - 0.1 - 0.01) );
 -webkit-column-count: 3; /* Chrome, Safari, Opera */
 -moz-column-count: 3; /* Firefox */
 column-count: 3;
@@ -146,7 +145,7 @@ column-rule-style: none;
 column-rule-color: black;
 background-color: #ffffff;
 font-family: Rasa;
-margin-top: calc(23.375in *  0.10 );
+margin-top: calc(23.375in *  0.1 );
 padding-top: 1em;
 padding-bottom: 1em;
 }
@@ -239,7 +238,7 @@ text-align: left;
 }
 .main {
 width: 16.5in;
-height: calc(23.375in * 0.10);
+height: calc(23.375in * 0.1);
 position: absolute;
 background-color: #1a1818;
 color: #ffffff90;
@@ -310,8 +309,8 @@ padding: 0cm;
 }
 .main_bottom {
 width: 16.5in;
-height: calc(23.375in * 0.10);
-margin-top: calc(23.375in * (1 - 0.10));
+height: calc(23.375in * 0.1);
+margin-top: calc(23.375in * (1 - 0.1));
 position: absolute;
 background-color: #1a1818;
 background-image: linear-gradient(#9e8a8a 10%, #1a1818);
@@ -426,26 +425,20 @@ font-size: 20px;
 </script>
 <div id="conditional-density-estimation" class="section level2">
 <h2>Conditional Density Estimation</h2>
-<div class="figure"><span id="fig:qr"></span>
-<img src="index_files/figure-html/qr-1.png" alt="\label{fig:qr}QR code for CDE animation" width="30%" style="float:right; padding:10px" />
-<p class="caption">
-Figure 1: QR code for CDE animation
-</p>
-</div>
 <p>Conditional density estimation (CDE) is a form of supervised learning with methods in statistics, machine learning and deep learning. It is a generalisation of regression. Instead of predicting a point estimate <span class="math inline">\(\hat{y}\)</span> and generating a confidence or credible interval <span class="math inline">\(\hat{y}\pm CI\)</span>, the task is to predict the full conditional density <span class="math inline">\(p(y|x)\)</span> of the data for a given query point <span class="math inline">\(x\)</span>, an improved form of <strong>uncertainty quantification</strong>.</p>
-<p>Figure <a href="#fig:cde">2</a> shows Kernel-CDE <span class="citation"><a href="#ref-bashtannyk2001bandwidth" role="doc-biblioref">[1]</a></span> <span class="citation"><a href="#ref-rosenblatt1969conditional" role="doc-biblioref">[2]</a></span> using the faithful geyser data via the <strong>hdrcde</strong> R package, demonstrating an improvement in uncertainty quantification by using CDE instead of intervals. Early CDE methods included Kernel-CDE, Mixture Density Networks <span class="citation"><a href="#ref-carney2005predicting" role="doc-biblioref">[3]</a></span> and discretisation of the target variable via class probability estimators <span class="citation"><a href="#ref-frank2009conditional" role="doc-biblioref">[4]</a></span> (Figure <a href="#fig:qr">1</a>). Modern methods for CDE include Random Forest-CDE <span class="citation"><a href="#ref-pospisil2018rfcde" role="doc-biblioref">[5]</a></span> and Bottleneck Conditional Density Estimation, a variation on Conditional-VAEs <span class="citation"><a href="#ref-shu2017bottleneck" role="doc-biblioref">[6]</a></span>.</p>
+<p>Figure <a href="#fig:cde">1</a> shows Kernel-CDE <span class="citation">[<a href="#ref-bashtannyk2001bandwidth" role="doc-biblioref">1</a>]</span> <span class="citation">[<a href="#ref-rosenblatt1969conditional" role="doc-biblioref">2</a>]</span> using the faithful geyser data via the <strong>hdrcde</strong> R package, demonstrating an improvement in uncertainty quantification by using CDE instead of intervals. Early CDE methods included Kernel-CDE, Mixture Density Networks <span class="citation">[<a href="#ref-carney2005predicting" role="doc-biblioref">3</a>]</span> and discretisation of the target variable via class probability estimators <span class="citation">[<a href="#ref-frank2009conditional" role="doc-biblioref">4</a>]</span> (Figure <a href="#fig:qr"><strong>??</strong></a>). Modern methods for CDE include Random Forest-CDE <span class="citation">[<a href="#ref-pospisil2018rfcde" role="doc-biblioref">5</a>]</span> and Bottleneck Conditional Density Estimation, a variation on Conditional-VAEs <span class="citation">[<a href="#ref-shu2017bottleneck" role="doc-biblioref">6</a>]</span>.</p>
 <div class="figure"><span id="fig:cde"></span>
-<img src="index_files/figure-html/cde-1.png" alt="\label{fig:cde}Demonstration of estimation using KCDE vs Simple Linear Regression &amp; Prediction Intervals" width="100%" />
+<img src="cde_nfs_files/figure-html/cde-1.png" alt="\label{fig:cde}Demonstration of estimation using KCDE vs Simple Linear Regression &amp; Prediction Intervals" width="100%" />
 <p class="caption">
-Figure 2: Demonstration of estimation using KCDE vs Simple Linear Regression &amp; Prediction Intervals
+Figure 1: Demonstration of estimation using KCDE vs Simple Linear Regression &amp; Prediction Intervals
 </p>
 </div>
 </div>
 <div id="normalising-flows" class="section level2">
 <h2>Normalising Flows</h2>
-<p>Normalising flows (NFs) are sequences of invertible, differentiable, composable, transformations (bijections) on a base probability distribution (often a simple Gaussian) to approximate the true density, which may be skewed, multi-modal or complex (even discontinuous) <span class="citation"><a href="#ref-kobyzev2020normalizing" role="doc-biblioref">[7]</a></span>. NFs were proposed as a density estimation procedure <span class="citation"><a href="#ref-tabak2010density" role="doc-biblioref">[8]</a></span>, then for use as approximate posteriors in variational inference <span class="citation"><a href="#ref-rezende2015variational" role="doc-biblioref">[9]</a></span>. They came to prominence for efficiency and expressiveness in both sampling (generative direction) and density evaluation (normalising direction). NFs fit alongside VAEs and GANs as recent deep learning generative models, however, VAEs and GANs are not efficient for density evaluation.</p>
+<p>Normalising flows (NFs) are sequences of invertible, differentiable, composable, transformations (bijections) on a base probability distribution (often a simple Gaussian) to approximate the true density, which may be skewed, multi-modal or complex (even discontinuous) <span class="citation">[<a href="#ref-kobyzev2020normalizing" role="doc-biblioref">7</a>]</span>. NFs were proposed as a density estimation procedure <span class="citation">[<a href="#ref-tabak2010density" role="doc-biblioref">8</a>]</span>, then for use as approximate posteriors in variational inference <span class="citation">[<a href="#ref-rezende2015variational" role="doc-biblioref">9</a>]</span>. They came to prominence for efficiency and expressiveness in both sampling (generative direction) and density evaluation (normalising direction). NFs fit alongside VAEs and GANs as recent deep learning generative models, however, VAEs and GANs are not efficient for density evaluation.</p>
 <blockquote>
-<p><em>By the term normalising flows people mean bijections which are convenient to compute, invert, and calculate the determinant of their Jacobian</em> <span class="citation"><a href="#ref-kobyzev2020normalizing" role="doc-biblioref">[7]</a></span>.</p>
+<p><em>By the term normalising flows people mean bijections which are convenient to compute, invert, and calculate the determinant of their Jacobian</em> <span class="citation">[<a href="#ref-kobyzev2020normalizing" role="doc-biblioref">7</a>]</span>.</p>
 </blockquote>
 <!--
 
@@ -453,92 +446,93 @@ Figure 2: Demonstration of estimation using KCDE vs Simple Linear Regression &am
 
 -->
 <div class="figure"><span id="fig:nfs"></span>
-<img src="index_files/figure-html/nfs-1.png" alt="\label{fig:nfs}Expressiveness and efficiency varies by choice of flow" width="100%" />
+<img src="cde_nfs_files/figure-html/nfs-1.png" alt="\label{fig:nfs}Expressiveness and efficiency varies by choice of flow" width="100%" />
 <p class="caption">
-Figure 3: Expressiveness and efficiency varies by choice of flow
+Figure 2: Expressiveness and efficiency varies by choice of flow
 </p>
 </div>
-<p>Normalising flows are trained by maximising log-likelihood via stochastic gradient descent, or minimising Kullback-Liebler divergence when variational inference is used. Three properties are important for NFs <span class="citation"><a href="#ref-kobyzev2020normalizing" role="doc-biblioref">[7]</a></span>:</p>
+<p>Normalising flows are trained by maximising log-likelihood via stochastic gradient descent, or minimising Kullback-Liebler divergence when variational inference is used. Three properties are important for NFs <span class="citation">[<a href="#ref-kobyzev2020normalizing" role="doc-biblioref">7</a>]</span>:</p>
 <ul>
 <li>Efficiency</li>
 <li>Expressiveness</li>
 <li>Invertibility</li>
 </ul>
-<p>The number of layers and class of model both influence the expressiveness of the trained distribution. Figure <a href="#fig:nfs">3</a> shows a sample from a Multivariate Normal: <span class="math inline">\(\mathbf{x} \sim \mathcal{N}(\mathcal{u},I)\)</span> transformed using two simple (inexpressive) linear <span class="math inline">\(g(x) = \mathbf{A}\mathbf{x} + b\)</span> flows, where <span class="math inline">\(A_1 := diag(v), A_2 := tri(v), v\sim U(0,3)\)</span> and <span class="math inline">\(b \sim U(-3,3), \mathbf{x} \in \mathcal{R^2}\)</span>. For <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_2\)</span>, positive entries on the diagonal ensure invertibility. However, moving from a diagonal to triangular matrix incurs a computation cost, moving from <span class="math inline">\(\mathcal{O}(d)\)</span> to <span class="math inline">\(\mathcal{O}(d^2)\)</span> when calculating the inverse.</p>
-<p>Practical NF models often use <strong>coupling</strong> functions (NICE, RealNVP, Neural Spline Flows, Glow). Coupling functions split the input into disjoint partions, applying an arbitrarily complex conditioning function (e.g. an invertible neural network) to one. Other models use coupling functions where the conditioner is <strong>autoregressive</strong> (Masked Autoregressive Flows, Inverse Autoregressive Flows, Neural Autoregressive Flows). Recent developments include continuous NFs using neural ordinary differential equations (e.g. FFJORD), work on ordinal data and on manifold learning <span class="citation"><a href="#ref-kobyzev2020normalizing" role="doc-biblioref">[7]</a></span>.</p>
+
+<p>The number of layers and class of model both influence the expressiveness of the trained distribution. Figure <a href="#fig:nfs">2</a> shows a sample from a Multivariate Normal: <span class="math inline">\(\mathbf{x} \sim \mathcal{N}(\mathcal{u},I)\)</span> transformed using two simple (inexpressive) linear <span class="math inline">\(g(x) = \mathbf{A}\mathbf{x} + b\)</span> flows, where <span class="math inline">\(A_1 := diag(v), A_2 := tri(v), v\sim U(0,3)\)</span> and <span class="math inline">\(b \sim U(-3,3), \mathbf{x} \in \mathcal{R^2}\)</span>. For <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_2\)</span>, positive entries on the diagonal ensure invertibility. However, moving from a diagonal to triangular matrix incurs a computation cost, moving from <span class="math inline">\(\mathcal{O}(d)\)</span> to <span class="math inline">\(\mathcal{O}(d^2)\)</span> when calculating the inverse.</p>
+<p>Practical NF models often use <strong>coupling</strong> functions (NICE, RealNVP, Neural Spline Flows, Glow). Coupling functions split the input into disjoint partions, applying an arbitrarily complex conditioning function (e.g. an invertible neural network) to one. Other models use coupling functions where the conditioner is <strong>autoregressive</strong> (Masked Autoregressive Flows, Inverse Autoregressive Flows, Neural Autoregressive Flows). Recent developments include continuous NFs using neural ordinary differential equations (e.g. FFJORD), work on ordinal data and on manifold learning <span class="citation">[<a href="#ref-kobyzev2020normalizing" role="doc-biblioref">7</a>]</span>.</p>
 </div>
 <div id="nfs-for-cde" class="section level2">
 <h2>NFs for CDE</h2>
-<p>Normalising flows find applications in conditional class probability estimation, conditional image generation and multivariate time series prediction. Work on CDE with NFs is limited. This includes Bayesian NFs, with a framework for priors over CDE estimators using Bayesian neural networks with variational inference <span class="citation"><a href="#ref-trippe2018conditional" role="doc-biblioref">[10]</a></span>. CDE using Masked Autoregressive Flows and Real NVP by conditioning each term in the chain rule of probability with the inclusion of <span class="math inline">\(y\)</span> at every layer was proposed in 2017 <span class="citation"><a href="#ref-papamakarios2017masked" role="doc-biblioref">[11]</a></span>. This was explored while introducing noise regularisation for CDE in 2019 <span class="citation"><a href="#ref-rothfuss2019noise" role="doc-biblioref">[12]</a></span>. Conditional NFs for structured prediction have also been developed <span class="citation"><a href="#ref-winkler2019learning" role="doc-biblioref">[13]</a></span>. Progress in using NFs for CDE has been limited by the following factors:</p>
+<p>Normalising flows find applications in conditional class probability estimation, conditional image generation and multivariate time series prediction. Work on CDE with NFs is limited. This includes Bayesian NFs, with a framework for priors over CDE estimators using Bayesian neural networks with variational inference <span class="citation">[<a href="#ref-trippe2018conditional" role="doc-biblioref">10</a>]</span>. CDE using Masked Autoregressive Flows and Real NVP by conditioning each term in the chain rule of probability with the inclusion of <span class="math inline">\(y\)</span> at every layer was proposed in 2017 <span class="citation">[<a href="#ref-papamakarios2017masked" role="doc-biblioref">11</a>]</span>. This was explored while introducing noise regularisation for CDE in 2019 <span class="citation">[<a href="#ref-rothfuss2019noise" role="doc-biblioref">12</a>]</span>. Conditional NFs for structured prediction have also been developed <span class="citation">[<a href="#ref-winkler2019learning" role="doc-biblioref">13</a>]</span>. Progress in using NFs for CDE has been limited by the following factors:</p>
 <ul>
-<li>Computational difficulty of scaling NFs to large data sets - newer continuous NF models are restricted to usage on small image benchmark sets <span class="citation"><a href="#ref-grathwohl2018ffjord" role="doc-biblioref">[14]</a></span>.</li>
+<li>Computational difficulty of scaling NFs to large data sets - newer continuous NF models are restricted to usage on small image benchmark sets <span class="citation">[<a href="#ref-grathwohl2018ffjord" role="doc-biblioref">14</a>]</span>.</li>
 <li>Deep learning focus is often in areas of traditional strength, e.g. image data.</li>
 </ul>
-<p>Figure <a href="#fig:nfcdeex">4</a> demonstrates using NFs to create CDEs of rainfall &amp; soil moisture over 10 3 month time steps (data source: NIWA - VCSN <span class="citation"><a href="#ref-tait2006thin" role="doc-biblioref">[15]</a></span>). We scale the data, train the flow, and condition on two levels of rainfall <span class="math inline">\([-1,1]\)</span>, showing the conditional densities. Note the separate estimates have different modalities, which could reflect a seasonal effect. Other climatological and spatio-temporal factors would be extra sources of variation are not considered. The marginals are simulated well while the joint is poorly approximated (and noisy).</p>
+<p>Figure <a href="#fig:nfcdeex">3</a> demonstrates using NFs to create CDEs of rainfall &amp; soil moisture over 10 3 month time steps (data source: NIWA - VCSN <span class="citation">[<a href="#ref-tait2006thin" role="doc-biblioref">15</a>]</span>). We scale the data, train the flow, and condition on two levels of rainfall <span class="math inline">\([-1,1]\)</span>, showing the conditional densities. Note the separate estimates have different modalities, which could reflect a seasonal effect. Other climatological and spatio-temporal factors would be extra sources of variation are not considered. The marginals are simulated well while the joint is poorly approximated (and noisy).</p>
 <p>The probabilistic programming libraries <strong>Pyro</strong> (for <strong>PyTorch</strong>) and <strong>TensorFlow Probability</strong> both implement NFs.</p>
 <hr style="height:30pt; visibility:hidden;" />
 <div class="figure"><span id="fig:nfcdeex"></span>
 <img src="figures/combined.png" alt="\label{fig:nfcdeex}Traing NFs for CDE with climatological data" width="100%" style="float:right; padding:10px" />
 <p class="caption">
-Figure 4: Traing NFs for CDE with climatological data
+Figure 3: Traing NFs for CDE with climatological data
 </p>
 </div>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
 <!-- rmarkdown::render(input = "cde_nfs.Rmd",output_file = "index.html") -->
-<div id="refs" class="references csl-bib-body">
-<div id="ref-bashtannyk2001bandwidth" class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">D. M. Bashtannyk and R. J. Hyndman, <span>“Bandwidth selection for kernel conditional density estimation,”</span> <em>Computational Statistics &amp; Data Analysis</em>, vol. 36, no. 3, pp. 279–298, 2001.</div>
+<div id="refs" class="references">
+<div id="ref-bashtannyk2001bandwidth">
+<p>[1] D. M. Bashtannyk and R. J. Hyndman, “Bandwidth selection for kernel conditional density estimation,” <em>Computational Statistics &amp; Data Analysis</em>, vol. 36, no. 3, pp. 279–298, 2001.</p>
 </div>
-<div id="ref-rosenblatt1969conditional" class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">M. Rosenblatt, <span>“Conditional probability density and regression estimators,”</span> <em>Multivariate analysis II</em>, vol. 25, p. 31, 1969.</div>
+<div id="ref-rosenblatt1969conditional">
+<p>[2] M. Rosenblatt, “Conditional probability density and regression estimators,” <em>Multivariate analysis II</em>, vol. 25, p. 31, 1969.</p>
 </div>
-<div id="ref-carney2005predicting" class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">M. Carney, P. Cunningham, J. Dowling, and C. Lee, <span>“Predicting probability distributions for surf height using an ensemble of mixture density networks,”</span> in <em>Proceedings of the 22nd international conference on machine learning</em>, 2005, pp. 113–120.</div>
+<div id="ref-carney2005predicting">
+<p>[3] M. Carney, P. Cunningham, J. Dowling, and C. Lee, “Predicting probability distributions for surf height using an ensemble of mixture density networks,” in <em>Proceedings of the 22nd international conference on machine learning</em>, 2005, pp. 113–120.</p>
 </div>
-<div id="ref-frank2009conditional" class="csl-entry">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">E. Frank and R. R. Bouckaert, <span>“Conditional density estimation with class probability estimators,”</span> in <em>Asian conference on machine learning</em>, 2009, pp. 65–81.</div>
+<div id="ref-frank2009conditional">
+<p>[4] E. Frank and R. R. Bouckaert, “Conditional density estimation with class probability estimators,” in <em>Asian conference on machine learning</em>, 2009, pp. 65–81.</p>
 </div>
-<div id="ref-pospisil2018rfcde" class="csl-entry">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">T. Pospisil and A. B. Lee, <span>“Rfcde: Random forests for conditional density estimation,”</span> <em>arXiv preprint arXiv:1804.05753</em>, 2018.</div>
+<div id="ref-pospisil2018rfcde">
+<p>[5] T. Pospisil and A. B. Lee, “Rfcde: Random forests for conditional density estimation,” <em>arXiv preprint arXiv:1804.05753</em>, 2018.</p>
 </div>
-<div id="ref-shu2017bottleneck" class="csl-entry">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">R. Shu, H. H. Bui, and M. Ghavamzadeh, <span>“Bottleneck conditional density estimation,”</span> in <em>International conference on machine learning</em>, 2017, pp. 3164–3172.</div>
+<div id="ref-shu2017bottleneck">
+<p>[6] R. Shu, H. H. Bui, and M. Ghavamzadeh, “Bottleneck conditional density estimation,” in <em>International conference on machine learning</em>, 2017, pp. 3164–3172.</p>
 </div>
-<div id="ref-kobyzev2020normalizing" class="csl-entry">
-<div class="csl-left-margin">[7] </div><div class="csl-right-inline">I. Kobyzev, S. Prince, and M. Brubaker, <span>“Normalizing flows: An introduction and review of current methods,”</span> <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>, 2020.</div>
+<div id="ref-kobyzev2020normalizing">
+<p>[7] I. Kobyzev, S. Prince, and M. Brubaker, “Normalizing flows: An introduction and review of current methods,” <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>, 2020.</p>
 </div>
-<div id="ref-tabak2010density" class="csl-entry">
-<div class="csl-left-margin">[8] </div><div class="csl-right-inline">E. G. Tabak, E. Vanden-Eijnden, and others, <span>“Density estimation by dual ascent of the log-likelihood,”</span> <em>Communications in Mathematical Sciences</em>, vol. 8, no. 1, pp. 217–233, 2010.</div>
+<div id="ref-tabak2010density">
+<p>[8] E. G. Tabak, E. Vanden-Eijnden, and others, “Density estimation by dual ascent of the log-likelihood,” <em>Communications in Mathematical Sciences</em>, vol. 8, no. 1, pp. 217–233, 2010.</p>
 </div>
-<div id="ref-rezende2015variational" class="csl-entry">
-<div class="csl-left-margin">[9] </div><div class="csl-right-inline">D. Rezende and S. Mohamed, <span>“Variational inference with normalizing flows,”</span> in <em>International conference on machine learning</em>, 2015, pp. 1530–1538.</div>
+<div id="ref-rezende2015variational">
+<p>[9] D. Rezende and S. Mohamed, “Variational inference with normalizing flows,” in <em>International conference on machine learning</em>, 2015, pp. 1530–1538.</p>
 </div>
-<div id="ref-trippe2018conditional" class="csl-entry">
-<div class="csl-left-margin">[10] </div><div class="csl-right-inline">B. L. Trippe and R. E. Turner, <span>“Conditional density estimation with bayesian normalising flows,”</span> <em>arXiv preprint arXiv:1802.04908</em>, 2018.</div>
+<div id="ref-trippe2018conditional">
+<p>[10] B. L. Trippe and R. E. Turner, “Conditional density estimation with bayesian normalising flows,” <em>arXiv preprint arXiv:1802.04908</em>, 2018.</p>
 </div>
-<div id="ref-papamakarios2017masked" class="csl-entry">
-<div class="csl-left-margin">[11] </div><div class="csl-right-inline">G. Papamakarios, T. Pavlakou, and I. Murray, <span>“Masked autoregressive flow for density estimation,”</span> <em>arXiv preprint arXiv:1705.07057</em>, 2017.</div>
+<div id="ref-papamakarios2017masked">
+<p>[11] G. Papamakarios, T. Pavlakou, and I. Murray, “Masked autoregressive flow for density estimation,” <em>arXiv preprint arXiv:1705.07057</em>, 2017.</p>
 </div>
-<div id="ref-rothfuss2019noise" class="csl-entry">
-<div class="csl-left-margin">[12] </div><div class="csl-right-inline">J. Rothfuss <em>et al.</em>, <span>“Noise regularization for conditional density estimation,”</span> <em>arXiv preprint arXiv:1907.08982</em>, 2019.</div>
+<div id="ref-rothfuss2019noise">
+<p>[12] J. Rothfuss <em>et al.</em>, “Noise regularization for conditional density estimation,” <em>arXiv preprint arXiv:1907.08982</em>, 2019.</p>
 </div>
-<div id="ref-winkler2019learning" class="csl-entry">
-<div class="csl-left-margin">[13] </div><div class="csl-right-inline">C. Winkler, D. Worrall, E. Hoogeboom, and M. Welling, <span>“Learning likelihoods with conditional normalizing flows,”</span> <em>arXiv preprint arXiv:1912.00042</em>, 2019.</div>
+<div id="ref-winkler2019learning">
+<p>[13] C. Winkler, D. Worrall, E. Hoogeboom, and M. Welling, “Learning likelihoods with conditional normalizing flows,” <em>arXiv preprint arXiv:1912.00042</em>, 2019.</p>
 </div>
-<div id="ref-grathwohl2018ffjord" class="csl-entry">
-<div class="csl-left-margin">[14] </div><div class="csl-right-inline">W. Grathwohl, R. T. Chen, J. Bettencourt, I. Sutskever, and D. Duvenaud, <span>“Ffjord: Free-form continuous dynamics for scalable reversible generative models,”</span> <em>arXiv preprint arXiv:1810.01367</em>, 2018.</div>
+<div id="ref-grathwohl2018ffjord">
+<p>[14] W. Grathwohl, R. T. Chen, J. Bettencourt, I. Sutskever, and D. Duvenaud, “Ffjord: Free-form continuous dynamics for scalable reversible generative models,” <em>arXiv preprint arXiv:1810.01367</em>, 2018.</p>
 </div>
-<div id="ref-tait2006thin" class="csl-entry">
-<div class="csl-left-margin">[15] </div><div class="csl-right-inline">A. Tait, R. Henderson, R. Turner, and X. Zheng, <span>“Thin plate smoothing spline interpolation of daily rainfall for new zealand using a climatological rainfall surface,”</span> <em>International Journal of Climatology: A Journal of the Royal Meteorological Society</em>, vol. 26, no. 14, pp. 2097–2115, 2006.</div>
+<div id="ref-tait2006thin">
+<p>[15] A. Tait, R. Henderson, R. Turner, and X. Zheng, “Thin plate smoothing spline interpolation of daily rainfall for new zealand using a climatological rainfall surface,” <em>International Journal of Climatology: A Journal of the Royal Meteorological Society</em>, vol. 26, no. 14, pp. 2097–2115, 2006.</p>
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Poster produced via the <em>posterdown</em> package. The code to reproduce this poster is at <strong><a href="https://github.com/MattSkiff/nf_cde_poster" class="uri">https://github.com/MattSkiff/nf_cde_poster</a></strong>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Poster produced via the <em>posterdown</em> package. The code to reproduce this poster is at <strong><a href="https://github.com/MattSkiff/nf_cde_poster" class="uri">https://github.com/MattSkiff/nf_cde_poster</a></strong>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
